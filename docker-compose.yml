@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: web
+    build:
+      context: ./docker/web
+    restart: 'always'
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./:/www
+      - ./docker/web/site.conf:/etc/nginx/conf.d/site.conf
+      - ./docker/web/ssl/ssl.crt:/etc/nginx/ssl.crt
+      - ./docker/web/ssl/ssl.key:/etc/nginx/ssl.key
+    links:
+      - php
+      - db
+
+  php:
+    container_name: php
+    build:
+      context: ./docker/php
+    restart: 'always'
+    volumes:
+      - ./:/www
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+
+  db:
+    container_name: db
+    build:
+      context: ./docker/db
+    restart: 'always'
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  mail:
+    container_name: mail
+    build:
+      context: ./docker/mail
+    restart: 'always'
+    ports:
+      - 1025:1025
+      - 8025:8025
+
+  node:
+    container_name: node
+    build:
+      context: ./docker/node
+    restart: 'always'
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/www
+
+volumes:
+  mysql_data:
