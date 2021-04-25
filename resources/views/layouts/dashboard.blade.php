@@ -22,6 +22,8 @@
                 <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/transactions" class="py-10px px-20px text-white block">Transactions</a></li>
                 <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/templates" class="py-10px px-20px text-white block">Templates</a></li>
             </ul>
+
+            <a href="/" class="px-20px py-10px bg-pri-500 text-white cursor-pointer hover:bg-pri-700 block mt-100px">Logout</a>
         </nav>
 
         <div class="w-full px-20px py-20px sm:pl-340px sm:pr-40px sm:py-20px sm:h-screen text-justify">
