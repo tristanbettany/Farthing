@@ -14,7 +14,7 @@
         <nav class="w-full sm:w-300px h-200px sm:h-screen shadow-2xl bg-black sm:fixed bg-ter-800">
 
             <div class="text-center p-20px mb-20px">
-                <h1 title="Farthing" class="text-white tracking-widest">F<i class="text-white text-40px fas fa-coins"></i>RTHING</h1>
+                <a href="/dashboard" title="Farthing" class="text-40px text-white tracking-widest">F<i class="text-white text-40px fas fa-coins"></i>RTHING</a>
             </div>
 
             <ul>
