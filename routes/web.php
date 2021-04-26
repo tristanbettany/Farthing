@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\TemplatesController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\TagsController;
 
 Route::get('/', [LoginController::class, 'getIndex']);
 
@@ -15,4 +16,5 @@ Route::prefix('dashboard')
         Route::get('/accounts', [AccountsController::class, 'getIndex']);
         Route::get('/templates', [TemplatesController::class, 'getIndex']);
         Route::get('/transactions', [TransactionsController::class, 'getIndex']);
+        Route::get('/tags', [TagsController::class, 'getIndex']);
     });

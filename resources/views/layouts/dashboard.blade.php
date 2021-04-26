@@ -21,6 +21,7 @@
                 <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/accounts" class="py-10px px-20px text-white block">Accounts</a></li>
                 <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/transactions" class="py-10px px-20px text-white block">Transactions</a></li>
                 <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/templates" class="py-10px px-20px text-white block">Templates</a></li>
+                <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/tags" class="py-10px px-20px text-white block">Tags</a></li>
             </ul>
 
             <a href="/" class="px-20px py-10px bg-pri-500 text-white cursor-pointer hover:bg-pri-700 block mt-100px">Logout</a>
