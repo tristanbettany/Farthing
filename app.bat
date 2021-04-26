@@ -88,6 +88,21 @@ EXIT /B
     docker container exec -it -w /www node bash
     GOTO END_CASE
 
+:CASE_migrate-up
+    ECHO Migrating Up...
+    docker container exec -w /www php php artisan migrate
+    GOTO END_CASE
+
+:CASE_migrate-down
+    ECHO Migrating Down...
+    docker container exec -w /www php php artisan migrate:rollback
+    GOTO END_CASE
+
+:CASE_seed
+    ECHO Seeding...
+    docker container exec -w /www php php artisan db:seed
+    GOTO END_CASE
+
 :DEFAULT_CASE
     ECHO Unknown function %1
     GOTO END_CASE
