@@ -1,7 +1,19 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <h1 class="mb-40px">Accounts</h1>
+    <h1>Accounts</h1>
 
-    <p>The accounts area</p>
+    <div class="flex flex-row justify-start items-start flex-wrap">
+
+        <div class="w-full overflow-x-auto pt-40px">
+            @includeIf('dashboard.partials.accounts-table', [
+                'accounts' => $accounts,
+            ])
+        </div>
+
+        <div class="pt-20px">
+            {{ $accounts->links('dashboard.partials.pagination') }}
+        </div>
+
+    </div>
 @endsection

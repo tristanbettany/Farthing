@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AccountsService;
 use Illuminate\Contracts\Support\Renderable;
 
 class AccountsController extends Controller
 {
-    public function getIndex(): Renderable
+    public function getIndex(AccountsService $accountsService): Renderable
     {
-        return view('dashboard.accounts.index');
+        $accountsQuery = $accountsService->getAccountsQuery();
+
+        return view('dashboard.accounts.index')
+            ->with('accounts', $accountsService->paginateRecords($accountsQuery));
     }
 }
