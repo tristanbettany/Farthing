@@ -40,7 +40,11 @@ class TransactionModel extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(TagModel::class)
-            ->using(TransactionTagPivot::class);
+        return $this->belongsToMany(
+            TagModel::class,
+            TransactionTagPivot::class,
+            'transaction_id',
+            'tag_id',
+        );
     }
 }
