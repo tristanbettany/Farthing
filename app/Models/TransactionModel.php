@@ -18,12 +18,14 @@ class TransactionModel extends Model
         'account_id',
         'name',
         'amount',
-        'status',
         'date',
         'running_total',
     ];
 
     protected $casts = [
+        'is_cashed' => 'boolean',
+        'is_pending' => 'boolean',
+        'is_future' => 'boolean',
         'amount' => 'float',
         'running_total' => 'float',
         'date' => 'datetime',

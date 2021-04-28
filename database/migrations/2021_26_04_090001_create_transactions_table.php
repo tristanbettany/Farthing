@@ -13,7 +13,9 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('account_id');
             $table->string('name');
             $table->float('amount');
-            $table->string('status');
+            $table->boolean('is_cashed')->default(false);
+            $table->boolean('is_pending')->default(false);
+            $table->boolean('is_future')->default(false);
             $table->dateTime('date');
             $table->float('running_total');
 

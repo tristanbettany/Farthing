@@ -14,7 +14,7 @@ class CreateTagsTable extends Migration
             $table->string('name');
             $table->longText('regex');
             $table->string('hex_code');
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(true);
 
             $table->timestamps();
 
