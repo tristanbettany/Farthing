@@ -1,7 +1,19 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <h1 class="mb-40px">Transactions</h1>
+    <h1>{{ $account->name }}, Transactions</h1>
 
-    <p>The transactions area</p>
+    <div class="flex flex-row justify-start items-start flex-wrap">
+
+        <div class="w-full overflow-x-auto pt-40px">
+            @includeIf('dashboard.partials.transactions-table', [
+                'transactions' => $transactions,
+            ])
+        </div>
+
+        <div class="pt-20px">
+            {{ $transactions->links('dashboard.partials.pagination') }}
+        </div>
+
+    </div>
 @endsection
