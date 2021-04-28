@@ -19,7 +19,6 @@
 
             <ul>
                 <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/accounts" class="py-10px px-20px text-white block">Accounts</a></li>
-                <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/transactions" class="py-10px px-20px text-white block">Transactions</a></li>
                 <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/templates" class="py-10px px-20px text-white block">Templates</a></li>
                 <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/tags" class="py-10px px-20px text-white block">Tags</a></li>
             </ul>

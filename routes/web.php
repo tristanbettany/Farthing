@@ -13,8 +13,10 @@ Route::get('/', [LoginController::class, 'getIndex']);
 Route::prefix('dashboard')
     ->group( function() {
         Route::get('/', [DashboardController::class, 'getIndex']);
+
         Route::get('/accounts', [AccountsController::class, 'getIndex']);
+        Route::get('/accounts/{accountId}/transactions', [TransactionsController::class, 'getIndex']);
+
         Route::get('/templates', [TemplatesController::class, 'getIndex']);
-        Route::get('/transactions', [TransactionsController::class, 'getIndex']);
         Route::get('/tags', [TagsController::class, 'getIndex']);
     });
