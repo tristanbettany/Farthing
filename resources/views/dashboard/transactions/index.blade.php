@@ -5,7 +5,7 @@
 
     <div class="flex flex-row justify-start items-start flex-wrap">
 
-        <div class="w-full overflow-x-auto pt-40px">
+        <div class="w-full overflow-x-auto pt-40px overflow-y-hidden">
             @includeIf('dashboard.partials.transactions-table', [
                 'transactions' => $transactions,
             ])

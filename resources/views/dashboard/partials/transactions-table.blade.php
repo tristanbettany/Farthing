@@ -15,7 +15,7 @@
                 <td>{{ $transaction->date->format('d-m-y H:i:s') }}</td>
                 <td>
                     @foreach($transaction->tags as $tag)
-                        <span class="rounded px-10px py-5px text-14px" style="background-color:{{ $tag->hex_code }};">{{ $tag->id }}</span>
+                        <a href="/dashboard/tags/{{ $tag->id }}" title="{{ $tag->name }}" class="relative top-10px rounded-full h-10px w-10px inline-block cursor-pointer" style="background-color:{{ $tag->hex_code }};">&nbsp;</a>
                     @endforeach
                 </td>
                 <td><abbr title="{{ $transaction->name }}">{{ $transaction->getTruncatedName() }}</abbr></td>
