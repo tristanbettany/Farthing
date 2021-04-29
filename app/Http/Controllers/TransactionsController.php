@@ -17,6 +17,8 @@ class TransactionsController extends Controller
 
         $transactionsQuery = $transactionsService->getTransactionsQuery($account);
 
+        $transactionsQuery = $transactionsService->orderTransactions($transactionsQuery);
+
         return view('dashboard.transactions.index')
             ->with('transactions', $transactionsService->paginateRecords($transactionsQuery))
             ->with('account', $account);
