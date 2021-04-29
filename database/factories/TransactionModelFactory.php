@@ -16,6 +16,9 @@ class TransactionModelFactory extends Factory
             'amount' => 10.99,
             'date' => $this->faker->dateTime,
             'running_total' => 10.99,
+            'is_cashed' => $this->faker->boolean,
+            'is_pending' => $this->faker->boolean,
+            'is_future' => $this->faker->boolean,
         ];
     }
 }
