@@ -47,4 +47,9 @@ class TransactionModel extends Model
             'tag_id',
         );
     }
+
+    public function getTruncatedName()
+    {
+        return substr($this->name, 0, 40);
+    }
 }

@@ -18,7 +18,7 @@
                         <span class="rounded px-10px py-5px text-14px" style="background-color:{{ $tag->hex_code }};">{{ $tag->id }}</span>
                     @endforeach
                 </td>
-                <td>{{ $transaction->name }}</td>
+                <td><abbr title="{{ $transaction->name }}">{{ $transaction->getTruncatedName() }}</abbr></td>
                 <td>{{ $transaction->amount }}</td>
                 <td>{{ $transaction->running_total }}</td>
             </tr>
