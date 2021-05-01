@@ -11,7 +11,7 @@
 <body>
     <div class="flex flex-col justify-start flex-wrap sm:h-screen items-baseline">
 
-        <nav class="w-full sm:w-300px h-200px sm:h-screen shadow-2xl sm:fixed bg-ter-800">
+        <nav class="w-full sm:w-300px sm:h-screen shadow-2xl sm:fixed bg-ter-800">
 
             <div class="text-center p-20px mb-20px">
                 <a href="/dashboard" title="Farthing" class="text-40px text-white tracking-widest">F<i class="text-white text-40px fas fa-coins"></i>RTHING</a>
@@ -24,7 +24,7 @@
                 @endforeach
             </ul>
 
-            <a href="/" class="sm:absolute sm:bottom-0px sm:left-0px sm:w-300px px-20px py-10px bg-pri-500 text-white cursor-pointer hover:bg-pri-700 block mt-100px text-right">Logout <i class="text-white fas fa-sign-out-alt"></i></a>
+            <a href="/" class="sm:absolute sm:bottom-0px sm:left-0px sm:w-300px px-20px py-10px bg-pri-500 text-white cursor-pointer hover:bg-pri-700 block text-right">Logout <i class="text-white fas fa-sign-out-alt"></i></a>
         </nav>
 
         <div class="w-full px-20px py-20px sm:pl-340px sm:pr-40px sm:py-20px sm:h-screen text-justify">
