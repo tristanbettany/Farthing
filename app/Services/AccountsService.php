@@ -18,6 +18,11 @@ final class AccountsService extends AbstractService
         return AccountModel::query();
     }
 
+    public function orderAccounts(Builder $accountsQuery): Builder
+    {
+        return $accountsQuery->orderByDesc('created_at');
+    }
+
     public function addAccount(
         string $name,
         string $sortCode,

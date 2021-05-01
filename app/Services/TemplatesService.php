@@ -16,6 +16,6 @@ final class TemplatesService extends AbstractService
 
     public function orderTemplates(Builder $templatesQuery): Builder
     {
-        return $templatesQuery->orderByDesc('updated_at');
+        return $templatesQuery->orderByDesc('created_at');
     }
 }

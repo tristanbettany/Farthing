@@ -64,4 +64,17 @@ Route::prefix('dashboard')
             TagsController::class,
             'postView',
         ]);
+
+        Route::get('/accounts/{accountId}/tags/{tagId}/deactivate', [
+            TagsController::class,
+            'getDeactivate',
+        ]);
+        Route::get('/accounts/{accountId}/tags/{tagId}/activate', [
+            TagsController::class,
+            'getActivate',
+        ]);
+        Route::get('/accounts/{accountId}/tags/{tagId}/delete', [
+            TagsController::class,
+            'getDelete',
+        ]);
     });

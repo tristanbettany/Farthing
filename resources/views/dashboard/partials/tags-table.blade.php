@@ -25,7 +25,12 @@
                     @endif
                 </td>
                 <td>
-                    <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}/deactivate">Deactivate</a> |
+                    @if($tag->is_active === true)
+                        <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}/deactivate">Deactivate</a>
+                    @else
+                        <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}/activate">Activate</a>
+                    @endif
+                     |
                     <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}/delete">Delete</a>
                 </td>
             </tr>

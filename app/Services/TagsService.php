@@ -22,7 +22,7 @@ final class TagsService extends AbstractService
 
     public function orderTags(Builder $tagsQuery): Builder
     {
-        return $tagsQuery->orderByDesc('updated_at');
+        return $tagsQuery->orderByDesc('created_at');
     }
 
     public function addTag(
@@ -55,5 +55,30 @@ final class TagsService extends AbstractService
         $tag->save();
 
         return $tag;
+    }
+
+    public function deactivateTag(int $tagId): void
+    {
+        $tag = $this->getTag($tagId);
+
+        $tag->is_active = false;
+
+        $tag->save();
+    }
+
+    public function activateTag(int $tagId): void
+    {
+        $tag = $this->getTag($tagId);
+
+        $tag->is_active = true;
+
+        $tag->save();
+    }
+
+    public function deleteTag(int $tagId): void
+    {
+        $tag = $this->getTag($tagId);
+
+        $tag->delete();
     }
 }

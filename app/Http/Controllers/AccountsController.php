@@ -13,6 +13,8 @@ class AccountsController extends Controller
     {
         $accountsQuery = $accountsService->getAccountsQuery();
 
+        $accountsQuery = $accountsService->orderAccounts($accountsQuery);
+
         return view('dashboard.accounts.index')
             ->with('accounts', $accountsService->paginateRecords($accountsQuery));
     }
