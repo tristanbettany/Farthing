@@ -25,8 +25,16 @@
 
     <div class="flex flex-row justify-start items-start flex-wrap">
 
-        <div class="w-1/2 sm:w-1/4">
+        <div class="w-1/2 sm:w-1/4 sm:px-10px">
             <a href="/dashboard/accounts/{{ $account->id }}/transactions" class="text-center block bg-pri-500 text-white px-20px py-10px hover:text-black hover:bg-white border-2 border-pri-500">View Transactions</a>
+        </div>
+
+        <div class="w-1/2 sm:w-1/4 sm:px-10px">
+            <a href="/dashboard/accounts/{{ $account->id }}/templates" class="text-center block bg-pri-500 text-white px-20px py-10px hover:text-black hover:bg-white border-2 border-pri-500">View Templates</a>
+        </div>
+
+        <div class="w-1/2 sm:w-1/4 sm:px-10px">
+            <a href="/dashboard/accounts/{{ $account->id }}/tags" class="text-center block bg-pri-500 text-white px-20px py-10px hover:text-black hover:bg-white border-2 border-pri-500">View Tags</a>
         </div>
 
     </div>
