@@ -16,7 +16,6 @@ Route::prefix('dashboard')
 
         Route::get('/accounts', [AccountsController::class, 'getIndex']);
         Route::get('/accounts/{accountId}/transactions', [TransactionsController::class, 'getIndex']);
-
-        Route::get('/templates', [TemplatesController::class, 'getIndex']);
-        Route::get('/tags', [TagsController::class, 'getIndex']);
+        Route::get('/accounts/{accountId}/templates', [TemplatesController::class, 'getIndex']);
+        Route::get('/accounts/{accountId}/tags', [TagsController::class, 'getIndex']);
     });
