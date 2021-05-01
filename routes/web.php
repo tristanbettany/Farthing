@@ -33,6 +33,11 @@ Route::prefix('dashboard')
             AccountsController::class,
             'getView',
         ]);
+        Route::post('/accounts/{accountId}', [
+            AccountsController::class,
+            'postView',
+        ]);
+
         Route::get('/accounts/{accountId}/transactions', [
             TransactionsController::class,
             'getIndex',

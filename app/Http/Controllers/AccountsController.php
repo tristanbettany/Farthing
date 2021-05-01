@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AddAccountRequest;
+use App\Http\Requests\AccountRequest;
 use App\Services\AccountsService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -18,7 +18,7 @@ class AccountsController extends Controller
     }
 
     public function postIndex(
-        AddAccountRequest $request,
+        AccountRequest $request,
         AccountsService $accountsService
     ): RedirectResponse {
         $validatedInput = $request->validated();
@@ -40,5 +40,22 @@ class AccountsController extends Controller
 
         return view('dashboard.accounts.view')
             ->with('account', $account);
+    }
+
+    public function postView(
+        int $accountId,
+        AccountRequest $request,
+        AccountsService $accountsService
+    ): RedirectResponse {
+        $validatedInput = $request->validated();
+
+        $account = $accountsService->updateAccount(
+            $accountId,
+            $validatedInput['name'],
+            $validatedInput['sort_code'],
+            $validatedInput['account_number']
+        );
+
+        return redirect('/dashboard/accounts/' . $accountId);
     }
 }

@@ -29,4 +29,21 @@ final class AccountsService extends AbstractService
             'account_number' => $accountNumber,
         ]);
     }
+
+    public function updateAccount(
+        int $accountId,
+        string $name,
+        string $sortCode,
+        string $accountNumber
+    ): AccountModel {
+        $account = $this->getAccount($accountId);
+
+        $account->name = $name;
+        $account->sort_code = $sortCode;
+        $account->account_number = $accountNumber;
+
+        $account->save();
+
+        return $account;
+    }
 }

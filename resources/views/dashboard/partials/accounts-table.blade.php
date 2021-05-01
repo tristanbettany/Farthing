@@ -11,7 +11,7 @@
     <tbody>
         @foreach($accounts as $account)
             <tr>
-                <td>{{ $account->name }}</td>
+                <td><a class="link pri" href="/dashboard/accounts/{{ $account->id }}">{{ $account->name }}</a></td>
                 <td>{{ $account->sort_code }}</td>
                 <td>{{ $account->account_number }}</td>
                 <td>
