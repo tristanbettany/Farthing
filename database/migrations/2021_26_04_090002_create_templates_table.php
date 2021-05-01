@@ -15,7 +15,7 @@ class CreateTemplatesTable extends Migration
             $table->float('amount');
             $table->integer('occurances');
             $table->string('occurance_syntax');
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(true);
 
             $table->timestamps();
 

@@ -16,6 +16,6 @@ final class TagsService extends AbstractService
 
     public function orderTags(Builder $tagsQuery): Builder
     {
-        return $tagsQuery->orderByDesc('date');
+        return $tagsQuery->orderByDesc('updated_at');
     }
 }
