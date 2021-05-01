@@ -11,19 +11,20 @@
 <body>
     <div class="flex flex-col justify-start flex-wrap sm:h-screen items-baseline">
 
-        <nav class="w-full sm:w-300px h-200px sm:h-screen shadow-2xl bg-black sm:fixed bg-ter-800">
+        <nav class="w-full sm:w-300px h-200px sm:h-screen shadow-2xl sm:fixed bg-ter-800">
 
             <div class="text-center p-20px mb-20px">
                 <a href="/dashboard" title="Farthing" class="text-40px text-white tracking-widest">F<i class="text-white text-40px fas fa-coins"></i>RTHING</a>
             </div>
 
             <ul>
-                <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/accounts" class="py-10px px-20px text-white block">Accounts</a></li>
-                <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/templates" class="py-10px px-20px text-white block">Templates</a></li>
-                <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/tags" class="py-10px px-20px text-white block">Tags</a></li>
+                <li class="cursor-pointer bg-ter-700"><a href="/dashboard/accounts" class="py-10px px-20px text-ter-300 block">Accounts</a></li>
+                @foreach(\App\Models\AccountModel::all() as $account)
+                    <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/accounts/{{ $account->id }}" class="py-10px px-30px text-white block">{{ $account->name }}</a></li>
+                @endforeach
             </ul>
 
-            <a href="/" class="px-20px py-10px bg-pri-500 text-white cursor-pointer hover:bg-pri-700 block mt-100px">Logout</a>
+            <a href="/" class="sm:absolute sm:bottom-0px sm:left-0px sm:w-300px px-20px py-10px bg-pri-500 text-white cursor-pointer hover:bg-pri-700 block mt-100px text-right">Logout <i class="text-white fas fa-sign-out-alt"></i></a>
         </nav>
 
         <div class="w-full px-20px py-20px sm:pl-340px sm:pr-40px sm:py-20px sm:h-screen text-justify">
