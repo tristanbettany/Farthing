@@ -18,4 +18,19 @@ final class TagsService extends AbstractService
     {
         return $tagsQuery->orderByDesc('updated_at');
     }
+
+    public function addTag(
+        int $accountId,
+        string $name,
+        string $regex,
+        string $hexCode
+    ): TagModel {
+        return TagModel::create([
+            'account_id' => $accountId,
+            'name' => $name,
+            'regex' => $regex,
+            'hex_code' => $hexCode,
+            'is_active' => true,
+        ]);
+    }
 }
