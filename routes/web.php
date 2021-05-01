@@ -24,6 +24,11 @@ Route::prefix('dashboard')
             AccountsController::class,
             'getIndex',
         ]);
+        Route::post('/accounts', [
+            AccountsController::class,
+            'postIndex',
+        ]);
+
         Route::get('/accounts/{accountId}', [
             AccountsController::class,
             'getView',

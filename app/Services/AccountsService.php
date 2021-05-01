@@ -17,4 +17,16 @@ final class AccountsService extends AbstractService
     {
         return AccountModel::query();
     }
+
+    public function addAccount(
+        string $name,
+        string $sortCode,
+        string $accountNumber
+    ): AccountModel {
+        return AccountModel::create([
+            'name' => $name,
+            'sort_code' => $sortCode,
+            'account_number' => $accountNumber,
+        ]);
+    }
 }

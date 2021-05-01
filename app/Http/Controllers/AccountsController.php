@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddAccountRequest;
 use App\Services\AccountsService;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 
 class AccountsController extends Controller
 {
@@ -13,6 +15,21 @@ class AccountsController extends Controller
 
         return view('dashboard.accounts.index')
             ->with('accounts', $accountsService->paginateRecords($accountsQuery));
+    }
+
+    public function postIndex(
+        AddAccountRequest $request,
+        AccountsService $accountsService
+    ): RedirectResponse {
+        $validatedInput = $request->validated();
+
+        $account = $accountsService->addAccount(
+            $validatedInput['name'],
+            $validatedInput['sort_code'],
+            $validatedInput['account_number']
+        );
+
+        return redirect('/dashboard/accounts');
     }
 
     public function getView(
