@@ -16,7 +16,7 @@
                 <td>{{ $account->account_number }}</td>
                 <td>
                     <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/transactions">View Transactions</a> |
-                    <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/templates">View Templates</a> | 
+                    <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/templates">View Templates</a> |
                     <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/tags">View Tags</a>
                 </td>
             </tr>
