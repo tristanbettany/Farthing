@@ -55,4 +55,13 @@ Route::prefix('dashboard')
             TagsController::class,
             'postIndex',
         ]);
+
+        Route::get('/accounts/{accountId}/tags/{tagId}', [
+            TagsController::class,
+            'getView',
+        ]);
+        Route::post('/accounts/{accountId}/tags/{tagId}', [
+            TagsController::class,
+            'postView',
+        ]);
     });

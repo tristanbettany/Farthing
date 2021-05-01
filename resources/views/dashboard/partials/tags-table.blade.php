@@ -12,7 +12,9 @@
     <tbody>
         @foreach($tags as $tag)
             <tr>
-                <td>{{ $tag->name }}</td>
+                <td>
+                    <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}">{{ $tag->name }}</a>
+                </td>
                 <td>{{ $tag->regex }}</td>
                 <td>{{ $tag->hex_code }}</td>
                 <td>
@@ -23,9 +25,8 @@
                     @endif
                 </td>
                 <td>
-                    <a class="link pri" href="/dashboard/tags/{{ $tag->id }}/edit">Edit</a> |
-                    <a class="link pri" href="/dashboard/tags/{{ $tag->id }}/deactivate">Deactivate</a> |
-                    <a class="link pri" href="/dashboard/tags/{{ $tag->id }}/delete">Delete</a>
+                    <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}/deactivate">Deactivate</a> |
+                    <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}/delete">Delete</a>
                 </td>
             </tr>
         @endforeach

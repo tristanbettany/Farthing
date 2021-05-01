@@ -39,6 +39,7 @@
         <div class="w-full overflow-x-auto pt-40px overflow-y-hidden">
             @includeIf('dashboard.partials.tags-table', [
                 'tags' => $tags,
+                'account' => $account,
             ])
         </div>
 

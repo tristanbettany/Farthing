@@ -33,6 +33,12 @@
                 </button>
             </div>
 
+            <div class="w-full sm:w-1/4 sm:px-10px">
+                <a href="/dashboard/accounts" class="text-center block bg-ter-100 px-20px py-10px hover:text-black hover:bg-white hover:border-ter-200 border-2 border-ter-100">
+                    Cancel
+                </a>
+            </div>
+
         </div>
 
         <div class="w-full border-b-2 border-ter-200 mb-40px mt-40px"></div>

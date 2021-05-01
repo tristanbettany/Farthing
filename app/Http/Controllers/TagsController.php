@@ -42,4 +42,37 @@ class TagsController extends Controller
 
         return redirect('/dashboard/accounts/' . $accountId . '/tags');
     }
+
+    public function getView(
+        int $accountId,
+        int $tagId,
+        AccountsService $accountsService,
+        TagsService $tagsService
+    ): Renderable {
+        $account = $accountsService->getAccount($accountId);
+        $tag = $tagsService->getTag($tagId);
+
+        return view('dashboard.tags.view')
+            ->with('account', $account)
+            ->with('tag', $tag);
+    }
+
+    public function postView(
+        int $accountId,
+        int $tagId,
+        TagRequest $request,
+        AccountsService $accountsService,
+        TagsService $tagsService
+    ): RedirectResponse {
+        $validatedInput = $request->validated();
+
+        $tag = $tagsService->updateTag(
+            $tagId,
+            $validatedInput['name'],
+            $validatedInput['regex'],
+            $validatedInput['hex_code']
+        );
+
+        return redirect('/dashboard/accounts/' . $accountId . '/tags/' . $tagId);
+    }
 }
