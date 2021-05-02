@@ -20,7 +20,16 @@
             <ul>
                 <li class="cursor-pointer bg-ter-700"><a href="/dashboard/accounts" class="py-10px px-20px text-ter-300 block">Accounts</a></li>
                 @foreach(\App\Models\AccountModel::all() as $account)
-                    <li class="cursor-pointer hover:bg-ter-600"><a href="/dashboard/accounts/{{ $account->id }}" class="py-10px px-30px text-white block">{{ $account->name }}</a></li>
+                    <li class="cursor-pointer group relative">
+                        <a href="/dashboard/accounts/{{ $account->id }}" class="py-10px px-30px text-white block hover:bg-ter-600"><i class="text-white fas fa-caret-down"></i> {{ $account->name }}</a>
+                        <ul class="hidden group-hover:block">
+                            <li class="cursor-pointer">
+                                <a href="/dashboard/accounts/{{ $account->id }}/transactions" class="py-10px px-40px text-white block hover:bg-ter-600"><i class="text-white fas fa-caret-right"></i> Transactions</a>
+                                <a href="/dashboard/accounts/{{ $account->id }}/tags" class="py-10px px-40px text-white block hover:bg-ter-600"><i class="text-white fas fa-caret-right"></i> Tags</a>
+                                <a href="/dashboard/accounts/{{ $account->id }}/templates" class="py-10px px-40px text-white block hover:bg-ter-600"><i class="text-white fas fa-caret-right"></i> Templates</a>
+                            </li>
+                        </ul>
+                    </li>
                 @endforeach
             </ul>
 
