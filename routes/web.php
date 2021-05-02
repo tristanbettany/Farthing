@@ -20,61 +20,77 @@ Route::prefix('dashboard')
             'getIndex',
         ]);
 
-        Route::get('/accounts', [
-            AccountsController::class,
-            'getIndex',
-        ]);
-        Route::post('/accounts', [
-            AccountsController::class,
-            'postIndex',
-        ]);
+        Route::prefix('accounts')
+            ->group(function () {
+                Route::get('/', [
+                    AccountsController::class,
+                    'getIndex',
+                ]);
+                Route::post('/', [
+                    AccountsController::class,
+                    'postIndex',
+                ]);
 
-        Route::get('/accounts/{accountId}', [
-            AccountsController::class,
-            'getView',
-        ]);
-        Route::post('/accounts/{accountId}', [
-            AccountsController::class,
-            'postView',
-        ]);
+                Route::prefix('{accountId}')
+                    ->group(function () {
+                        Route::get('/', [
+                            AccountsController::class,
+                            'getView',
+                        ]);
+                        Route::post('/', [
+                            AccountsController::class,
+                            'postView',
+                        ]);
 
-        Route::get('/accounts/{accountId}/transactions', [
-            TransactionsController::class,
-            'getIndex',
-        ]);
-        Route::get('/accounts/{accountId}/templates', [
-            TemplatesController::class,
-            'getIndex',
-        ]);
+                        Route::get('/transactions', [
+                            TransactionsController::class,
+                            'getIndex',
+                        ]);
+                        Route::get('/templates', [
+                            TemplatesController::class,
+                            'getIndex',
+                        ]);
 
-        Route::get('/accounts/{accountId}/tags', [
-            TagsController::class,
-            'getIndex',
-        ]);
-        Route::post('/accounts/{accountId}/tags', [
-            TagsController::class,
-            'postIndex',
-        ]);
+                        Route::prefix('tags')
+                            ->group(function () {
+                                Route::get('/', [
+                                    TagsController::class,
+                                    'getIndex',
+                                ]);
+                                Route::post('/', [
+                                    TagsController::class,
+                                    'postIndex',
+                                ]);
 
-        Route::get('/accounts/{accountId}/tags/{tagId}', [
-            TagsController::class,
-            'getView',
-        ]);
-        Route::post('/accounts/{accountId}/tags/{tagId}', [
-            TagsController::class,
-            'postView',
-        ]);
+                                Route::prefix('{tagId}')
+                                    ->group(function () {
+                                        Route::get('/', [
+                                            TagsController::class,
+                                            'getView',
+                                        ]);
+                                        Route::post('/', [
+                                            TagsController::class,
+                                            'postView',
+                                        ]);
 
-        Route::get('/accounts/{accountId}/tags/{tagId}/deactivate', [
-            TagsController::class,
-            'getDeactivate',
-        ]);
-        Route::get('/accounts/{accountId}/tags/{tagId}/activate', [
-            TagsController::class,
-            'getActivate',
-        ]);
-        Route::get('/accounts/{accountId}/tags/{tagId}/delete', [
-            TagsController::class,
-            'getDelete',
-        ]);
+                                        Route::get('/deactivate', [
+                                            TagsController::class,
+                                            'getDeactivate',
+                                        ]);
+                                        Route::get('/activate', [
+                                            TagsController::class,
+                                            'getActivate',
+                                        ]);
+                                        Route::get('/delete', [
+                                            TagsController::class,
+                                            'getDelete',
+                                        ]);
+                                    });
+
+                            });
+
+                    });
+
+            });
+
     });
