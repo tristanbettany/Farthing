@@ -7,6 +7,7 @@ use App\Services\AccountsService;
 use App\Services\TagsService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
 
 class TagsController extends Controller
 {
@@ -73,7 +74,9 @@ class TagsController extends Controller
             $validatedInput['hex_code']
         );
 
-        return redirect('/dashboard/accounts/' . $accountId . '/tags/' . $tagId);
+        Session::flash('success', 'Updated Tag');
+
+        return redirect('/dashboard/accounts/' . $accountId . '/tags');
     }
 
     public function getDeactivate(
@@ -82,6 +85,8 @@ class TagsController extends Controller
         TagsService $tagsService
     ): RedirectResponse {
         $tagsService->deactivateTag($tagId);
+
+        Session::flash('success', 'Deactivated Tag');
 
         return redirect('/dashboard/accounts/' . $accountId . '/tags');
     }
@@ -93,6 +98,8 @@ class TagsController extends Controller
     ): RedirectResponse {
         $tagsService->activateTag($tagId);
 
+        Session::flash('success', 'Activated Tag');
+
         return redirect('/dashboard/accounts/' . $accountId . '/tags');
     }
 
@@ -102,6 +109,8 @@ class TagsController extends Controller
         TagsService $tagsService
     ): RedirectResponse {
         $tagsService->deleteTag($tagId);
+
+        Session::flash('success', 'Deleted Tag');
 
         return redirect('/dashboard/accounts/' . $accountId . '/tags');
     }

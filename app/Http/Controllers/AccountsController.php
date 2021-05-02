@@ -6,6 +6,7 @@ use App\Http\Requests\AccountRequest;
 use App\Services\AccountsService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
 
 class AccountsController extends Controller
 {
@@ -58,6 +59,8 @@ class AccountsController extends Controller
             $validatedInput['account_number']
         );
 
-        return redirect('/dashboard/accounts/' . $accountId);
+        Session::flash('success', 'Updated Account');
+
+        return redirect('/dashboard/accounts');
     }
 }

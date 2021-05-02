@@ -38,6 +38,18 @@
 
         <div class="w-full px-20px py-20px sm:pl-340px sm:pr-40px sm:py-20px sm:h-screen text-justify">
 
+            @if(empty(session('success')) === false)
+                <div class="w-full bg-pri-100 text-pri-500 p-20px mb-20px">
+                    <p>{{ session('success') }}</p>
+                </div>
+            @endif
+
+            @if(empty(session('error')) === false)
+                <div class="w-full bg-error-100 text-error-600 p-20px mb-20px">
+                    <p>{{ session('error') }}</p>
+                </div>
+            @endif
+
             @yield('content')
 
         </div>
