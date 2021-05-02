@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>Date</th>
-            <th>Tags</th>
+            <th></th>
             <th>Name</th>
             <th>Amount</th>
             <th>Running Total</th>
@@ -14,7 +14,7 @@
     <tbody>
         @foreach($transactions as $transaction)
             <tr>
-                <td>{{ $transaction->date->format('d-m-y H:i:s') }}</td>
+                <td>{{ $transaction->date->format('d-m-Y') }}</td>
                 <td>
                     @foreach($transaction->tags as $tag)
                         <a href="/dashboard/tags/{{ $tag->id }}" title="{{ $tag->name }}" class="relative top-10px rounded-full h-10px w-10px inline-block cursor-pointer" style="background-color:{{ $tag->hex_code }};">&nbsp;</a>

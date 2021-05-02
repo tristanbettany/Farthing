@@ -47,6 +47,10 @@ Route::prefix('dashboard')
                     TransactionsController::class,
                     'getIndex',
                 ]);
+                Route::post('/transactions', [
+                    TransactionsController::class,
+                    'postIndex',
+                ]);
                 Route::get('/templates', [
                     TemplatesController::class,
                     'getIndex',

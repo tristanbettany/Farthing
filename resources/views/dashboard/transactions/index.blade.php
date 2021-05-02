@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="w-full sm:w-1/4 sm:px-10px">
-                    <button class="form-submit block w-full" name="submit">
+                    <button class="form-submit block w-full" name="upload">
                         Upload Transactions
                     </button>
                 </div>
