@@ -16,7 +16,9 @@
                     <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}">{{ $tag->name }}</a>
                 </td>
                 <td>{{ $tag->regex }}</td>
-                <td>{{ $tag->hex_code }}</td>
+                <td>
+                    <span class="rounded px-10px py-5px" style="background-color:#{{ $tag->hex_code }};">{{ $tag->hex_code }}</span>
+                </td>
                 <td>
                     @if($tag->is_active === true)
                         <span class="rounded bg-pri-500 px-10px py-5px text-white">Yes</span>
