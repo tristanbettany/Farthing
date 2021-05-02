@@ -9,12 +9,14 @@ final class NatwestTransactionParser extends AbstractTransactionParser implement
 {
     public function parse(): array
     {
-        unset($this->rows[0]);
-        unset($this->rows[1]);
-        unset($this->rows[2]);
+        $this->rows = array_reverse($this->rows);
 
         $parsedRows = [];
         foreach($this->rows as $row) {
+            if (empty($row) === true || count($row) === 1 || $row[0] === 'Date') {
+                continue;
+            }
+
             $row[0] = str_replace('/', '-', $row[0]);
 
             $parsedRows[] = [

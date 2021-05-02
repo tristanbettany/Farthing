@@ -19,7 +19,8 @@ final class TransactionsService extends AbstractService
 
     public function orderTransactions(Builder $transactionsQuery): Builder
     {
-        return $transactionsQuery->orderByDesc('date');
+        return $transactionsQuery->orderByDesc('date')
+            ->orderByDesc('id');
     }
 
     public function uploadTransactions(
