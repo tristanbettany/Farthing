@@ -20,6 +20,9 @@ class TransactionModel extends Model
         'amount',
         'date',
         'running_total',
+        'is_cashed',
+        'is_pending',
+        'is_future',
     ];
 
     protected $casts = [
