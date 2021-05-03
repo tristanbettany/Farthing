@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Exception;
+use DateTimeImmutable;
 
 class TransactionsController extends Controller
 {
@@ -35,6 +36,22 @@ class TransactionsController extends Controller
         TransactionsService $transactionsService
     ): RedirectResponse {
         $account = $accountsService->getAccount($accountId);
+
+        if ($request->has('add') === true) {
+            try {
+                $transactionsService->addTransaction(
+                    $accountId,
+                    new DateTimeImmutable($request->get('date')),
+                    (float) $request->get('amount'),
+                    $request->get('type'),
+                    $request->get('name'),
+                );
+            } catch (Exception $e) {
+                Session::flash('error', 'Failed To Add Transaction ' . $e->getMessage());
+            }
+
+            Session::flash('success', 'Added Transaction');
+        }
 
         if ($request->has('upload') === true) {
             try {

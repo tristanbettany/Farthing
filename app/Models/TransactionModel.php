@@ -36,6 +36,10 @@ class TransactionModel extends Model
         'updated_at' => 'datetime',
     ];
 
+    public const TYPE_FUTURE = 'Future';
+    public const TYPE_PENDING = 'Pending';
+    public const TYPE_CASHED = 'Cashed';
+
     public function account()
     {
         return $this->belongsTo(AccountModel::class);

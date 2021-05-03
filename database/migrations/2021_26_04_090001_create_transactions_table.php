@@ -17,7 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->boolean('is_pending')->default(false);
             $table->boolean('is_future')->default(false);
             $table->dateTime('date');
-            $table->float('running_total');
+            $table->float('running_total')->nullable();
 
             $table->timestamps();
 

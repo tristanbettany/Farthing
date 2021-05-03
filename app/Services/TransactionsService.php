@@ -10,6 +10,7 @@ use App\Parsers\NatwestTransactionParser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
 use Exception;
+use DateTimeImmutable;
 
 final class TransactionsService extends AbstractService
 {
@@ -56,6 +57,66 @@ final class TransactionsService extends AbstractService
             }
         } else {
             throw new Exception('Nothing to upload');
+        }
+    }
+
+    public function addTransaction(
+        int $accountId,
+        DateTimeImmutable $date,
+        float $amount,
+        string $type,
+        string $name
+    ): TransactionModel {
+        $massAssignment = [
+            'account_id' => $accountId,
+            'name' => $name,
+            'amount' => $amount,
+            'date' => $date,
+        ];
+
+        if ($type === TransactionModel::TYPE_FUTURE) {
+            $massAssignment['is_future'] = true;
+        }
+
+        if ($type === TransactionModel::TYPE_PENDING) {
+            $massAssignment['is_pending'] = true;
+        }
+
+        $transaction = TransactionModel::create($massAssignment);
+
+        $this->recalculateRunningTotals($accountId);
+
+        return $transaction->fresh();
+    }
+
+    public function recalculateRunningTotals(int $accountId): void
+    {
+        $lastCashedTransaction = TransactionModel::query()
+            ->where('account_id', $accountId)
+            ->where('is_cashed', true)
+            ->orderByDesc('date')
+            ->orderByDesc('id')
+            ->limit(1)
+            ->first();
+
+        $otherTransactions = TransactionModel::query()
+            ->where('account_id', $accountId)
+            ->where('is_cashed', false)
+            ->orderBy('date', 'ASC')
+            ->orderBy('id', 'ASC')
+            ->get();
+
+        if ($lastCashedTransaction === null) {
+            $lastRunningTotal = 0.00;
+        } else {
+            $lastRunningTotal = $lastCashedTransaction->running_total;
+        }
+
+        foreach($otherTransactions as $transaction) {
+            $transaction->running_total = $lastRunningTotal + $transaction->amount;
+            $transaction->save();
+
+            $lastRunningTotal = $transaction->running_total;
         }
     }
 }

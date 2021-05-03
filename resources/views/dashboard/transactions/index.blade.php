@@ -40,7 +40,7 @@
 
     <div class="flex flex-row justify-start items-start flex-wrap">
 
-        <form class="pt-40px w-full" method="POST" enctype="multipart/form-data">
+        <form class="pt-40px w-full" method="POST">
 
             @csrf
 
@@ -60,8 +60,8 @@
                     <span class="text-18px font-bold pb-10px block">Type</span>
                     <div class="form-select-container">
                         <select class="form-select" name="type">
-                            <option>Future</option>
-                            <option>Pending</option>
+                            <option>{{ \App\Models\TransactionModel::TYPE_FUTURE }}</option>
+                            <option>{{ \App\Models\TransactionModel::TYPE_PENDING }}</option>
                         </select>
                         <div class="form-select-icon">
                             <i class="fas fa-caret-down"></i>

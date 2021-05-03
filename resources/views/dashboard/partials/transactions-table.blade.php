@@ -27,9 +27,9 @@
                     @if($transaction->is_cashed === true)
                         <span class="rounded bg-ter-100 px-10px py-5px">Cashed</span>
                     @elseif($transaction->is_pending === true)
-                        <span class="rounded bg-pri-400 text-white px-10px py-5px">Pending</span>
+                        <span class="rounded bg-warning-300 px-10px py-5px">Pending</span>
                     @elseif($transaction->is_future === true)
-                        <span class="rounded bg-warning-300 px-10px py-5px">Future</span>
+                        <span class="rounded bg-pri-400 px-10px py-5px text-white">Future</span>
                     @endif
                 </td>
                 <td></td>
