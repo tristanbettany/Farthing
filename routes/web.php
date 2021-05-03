@@ -66,6 +66,10 @@ Route::prefix('dashboard')
                     TransactionsController::class,
                     'postView',
                 ]);
+                Route::get('/delete', [
+                    TransactionsController::class,
+                    'getDelete',
+                ]);
             });
 
         Route::prefix('accounts/{accountId}/templates')

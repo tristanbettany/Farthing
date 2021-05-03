@@ -84,6 +84,17 @@ final class TransactionsService extends AbstractService
         return $transaction;
     }
 
+    public function deleteTransaction(int $transactionId): void
+    {
+        $transaction = $this->getTransaction($transactionId);
+
+        TransactionTagPivot::query()
+            ->where('transaction_id', $transactionId)
+            ->delete();
+
+        $transaction->delete();
+    }
+
     public function addTransaction(
         int $accountId,
         DateTimeInterface $date,

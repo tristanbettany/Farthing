@@ -35,6 +35,8 @@
                 <td>
                     @if($transaction->is_cashed === false)
                         <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/transactions/{{ $transaction->id }}">Edit</a>
+                        |
+                        <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/transactions/{{ $transaction->id }}/delete">Delete</a>
                     @endif
                 </td>
             </tr>

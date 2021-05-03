@@ -109,4 +109,21 @@ class TransactionsController extends Controller
 
         return redirect('/dashboard/accounts/' . $accountId . '/transactions');
     }
+
+    public function getDelete(
+        int $accountId,
+        int $transactionId,
+        TransactionsService $transactionsService
+    ): RedirectResponse {
+        try {
+            $transactionsService->deleteTransaction($transactionId);
+            $transactionsService->recalculateRunningTotals($accountId);
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Delete Transaction ' . $e->getMessage());
+        }
+
+        Session::flash('success', 'Deleted Transaction');
+
+        return redirect('/dashboard/accounts/' . $accountId . '/transactions');
+    }
 }
