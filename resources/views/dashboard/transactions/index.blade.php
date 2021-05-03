@@ -17,7 +17,7 @@
             <div class="w-full">
                 <div class="form-select-container">
                     <select class="form-select" name="bank">
-                        <option>Natwest</option>
+                        <option>{{ \App\Parsers\AbstractTransactionParser::PARSER_NATWEST }}</option>
                     </select>
                     <div class="form-select-icon">
                         <i class="fas fa-caret-down"></i>

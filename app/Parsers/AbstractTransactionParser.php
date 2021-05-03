@@ -6,6 +6,8 @@ use Illuminate\Http\UploadedFile;
 
 abstract class AbstractTransactionParser
 {
+    public const PARSER_NATWEST = 'Natwest CSV';
+
     protected UploadedFile $transactionsFile;
     protected array $rows;
 

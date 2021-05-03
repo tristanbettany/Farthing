@@ -6,6 +6,7 @@ use App\Models\AccountModel;
 use App\Models\Pivots\TransactionTagPivot;
 use App\Models\TagModel;
 use App\Models\TransactionModel;
+use App\Parsers\AbstractTransactionParser;
 use App\Parsers\NatwestTransactionParser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
@@ -31,7 +32,7 @@ final class TransactionsService extends AbstractService
         string $bank,
         UploadedFile $file
     ): void {
-        if ($bank === 'Natwest') {
+        if ($bank === AbstractTransactionParser::PARSER_NATWEST) {
             $parser = new NatwestTransactionParser($file);
             $rows = $parser->parse();
         }
