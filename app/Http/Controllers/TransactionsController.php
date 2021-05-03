@@ -60,6 +60,8 @@ class TransactionsController extends Controller
                     $request->get('bank'),
                     $request->file('csv')
                 );
+
+                $transactionsService->recalculateRunningTotals($accountId);
             } catch (Exception $e) {
                 Session::flash('error', 'Failed To Upload Transactions ' . $e->getMessage());
             }
