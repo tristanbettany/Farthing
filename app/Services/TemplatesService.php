@@ -34,6 +34,36 @@ final class TemplatesService extends AbstractService
         return $templatesQuery->orderByDesc('created_at');
     }
 
+    public function updateTemplate(
+        int $accountId,
+        int $templateId,
+        string $name,
+        float $amount,
+        int $occurances,
+        string $occuranceSyntax
+    ): TemplateModel {
+        $template = $this->getTemplate($templateId);
+
+        $template->name = $name;
+        $template->amount = $amount;
+        $template->occurances = $occurances;
+        $template->occurance_syntax = $occuranceSyntax;
+
+        $template->save();
+
+        $this->deactivateTemplate(
+            $accountId,
+            $templateId
+        );
+
+        $this->activateTemplate(
+            $accountId,
+            $templateId
+        );
+
+        return $template;
+    }
+
     public function addTemplate(
         int $accountId,
         float $amount,

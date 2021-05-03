@@ -13,7 +13,9 @@
     <tbody>
         @foreach($templates as $template)
             <tr>
-                <td>{{ $template->name }}</td>
+                <td>
+                    <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/templates/{{ $template->id }}">{{ $template->name }}</a>
+                </td>
                 <td>{{ $template->amount }}</td>
                 <td>{{ $template->occurances }}</td>
                 <td>{{ $template->occurance_syntax }}</td>
@@ -25,7 +27,6 @@
                     @endif
                 </td>
                 <td>
-                    <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/templates/{{ $template->id }}/edit">Edit</a> |
                     @if($template->is_active === true)
                         <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/templates/{{ $template->id }}/deactivate">Deactivate</a> |
                     @else

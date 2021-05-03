@@ -86,6 +86,14 @@ Route::prefix('dashboard')
 
         Route::prefix('accounts/{accountId}/templates/{templateId}')
             ->group(function () {
+                Route::get('/', [
+                    TemplatesController::class,
+                    'getView',
+                ]);
+                Route::post('/', [
+                    TemplatesController::class,
+                    'postView',
+                ]);
                 Route::get('/deactivate', [
                     TemplatesController::class,
                     'getDeactivate',

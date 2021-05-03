@@ -108,4 +108,44 @@ class TemplatesController extends Controller
 
         return redirect('/dashboard/accounts/' . $accountId . '/templates');
     }
+
+    public function getView(
+        int $accountId,
+        int $templateId,
+        AccountsService $accountsService,
+        TemplatesService $templatesService
+    ): Renderable {
+        $account = $accountsService->getAccount($accountId);
+        $template = $templatesService->getTemplate($templateId);
+
+        return view('dashboard.templates.view')
+            ->with('account', $account)
+            ->with('template', $template);
+    }
+
+    public function postView(
+        int $accountId,
+        int $templateId,
+        TemplateRequest $request,
+        TemplatesService $templatesService
+    ): RedirectResponse {
+        $validatedInput = $request->validated();
+
+        try {
+            $template = $templatesService->updateTemplate(
+                $accountId,
+                $templateId,
+                $validatedInput['name'],
+                (float) $validatedInput['amount'],
+                (int) $validatedInput['occurances'],
+                $validatedInput['occurance_syntax']
+            );
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Update Template ' . $e->getMessage());
+        }
+
+        Session::flash('success', 'Updated Template');
+
+        return redirect('/dashboard/accounts/' . $accountId . '/templates');
+    }
 }

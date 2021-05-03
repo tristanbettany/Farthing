@@ -131,6 +131,9 @@ final class TransactionsService extends AbstractService
         return $transaction->fresh();
     }
 
+    /**
+     * @TODO: This is way to slow #ORMSAREPANTS, optimize it!
+     */
     public function recalculateRunningTotals(int $accountId): void
     {
         $lastCashedTransaction = TransactionModel::query()
