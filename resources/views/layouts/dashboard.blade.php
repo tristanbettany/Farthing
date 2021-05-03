@@ -22,7 +22,7 @@
                 @foreach(\App\Models\AccountModel::all() as $account)
                     <li class="cursor-pointer group relative">
                         <a href="/dashboard/accounts/{{ $account->id }}" class="py-10px px-30px text-white block hover:bg-ter-600"><i class="text-white fas fa-caret-down"></i> {{ $account->name }}</a>
-                        <ul class="hidden group-hover:block">
+                        <ul class="hidden sm:group-hover:block">
                             <li class="cursor-pointer">
                                 <a href="/dashboard/accounts/{{ $account->id }}/transactions" class="py-10px px-40px text-white block hover:bg-ter-600"><i class="text-white fas fa-caret-right"></i> Transactions</a>
                                 <a href="/dashboard/accounts/{{ $account->id }}/tags" class="py-10px px-40px text-white block hover:bg-ter-600"><i class="text-white fas fa-caret-right"></i> Tags</a>
@@ -34,6 +34,10 @@
             </ul>
 
             <a href="/" class="sm:absolute sm:bottom-0px sm:left-0px sm:w-300px px-20px py-10px bg-pri-500 text-white cursor-pointer hover:bg-pri-700 block text-right">Logout <i class="text-white fas fa-sign-out-alt"></i></a>
+
+            <div class="text-white sm:absolute block sm:w-300px sm:left-0px sm:bottom-100px px-20px py-10px">
+                @yield('sidebar-info')
+            </div>
         </nav>
 
         <div class="w-full px-20px py-20px sm:pl-340px sm:pr-40px sm:py-20px sm:h-screen text-justify">

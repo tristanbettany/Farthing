@@ -1,5 +1,40 @@
 @extends('layouts.dashboard')
 
+@section('sidebar-info')
+    <form class="w-full" method="POST" enctype="multipart/form-data">
+
+        @csrf
+
+        <div class="flex flex-row justify-start items-end flex-wrap">
+
+            <div class="w-full my-10px">
+                <div class="relative">
+                    <label class="cursor-pointer block w-full text-center text-white border-2 border-ter-500 py-10px px-20px hover:border-white" for="csv">Select File</label>
+                    <input type="file" id="csv" name="csv" accept=".csv" required class="absolute top-0px bottom-0px right-0px left-0px m-0px p-0px cursor-pointer opacity-0" style="z-index: -1;">
+                </div>
+            </div>
+
+            <div class="w-full">
+                <div class="form-select-container">
+                    <select class="form-select" name="bank">
+                        <option>Natwest</option>
+                    </select>
+                    <div class="form-select-icon">
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full">
+                <button class="block w-full bg-pri-500 text-white py-10px px-20px text-center hover:bg-ter-800 border-2 border-t-0 border-pri-500" name="upload">
+                    Upload Transactions
+                </button>
+            </div>
+
+        </div>
+    </form>
+@endsection
+
 @section('content')
     <h1>{{ $account->name }}, Transactions</h1>
 
@@ -11,16 +46,22 @@
 
             <div class="flex flex-row justify-start items-end flex-wrap">
 
-                <div class="w-full sm:w-1/4 sm:px-10px">
-                    <span class="text-18px font-bold pb-10px sm:pb-20px block">Select File</span>
-                    <input type="file" id="csv" name="csv" accept=".csv" required>
+                <div class="w-full sm:w-1/6 sm:px-10px">
+                    <span class="text-18px font-bold pb-10px sm:pb-20px block">Date</span>
+                    <input type="date" name="date" class="form-input" />
                 </div>
 
-                <div class="w-full sm:w-1/4 sm:px-10px">
-                    <span class="text-18px font-bold pb-10px block">Bank</span>
+                <div class="w-full sm:w-1/6 sm:px-10px">
+                    <span class="text-18px font-bold pb-10px sm:pb-20px block">Amount</span>
+                    <input type="text" name="amount" class="form-input" />
+                </div>
+
+                <div class="w-full sm:w-1/6 sm:px-10px">
+                    <span class="text-18px font-bold pb-10px block">Type</span>
                     <div class="form-select-container">
-                        <select class="form-select" name="bank">
-                            <option>Natwest</option>
+                        <select class="form-select" name="type">
+                            <option>Future</option>
+                            <option>Pending</option>
                         </select>
                         <div class="form-select-icon">
                             <i class="fas fa-caret-down"></i>
@@ -28,13 +69,19 @@
                     </div>
                 </div>
 
-                <div class="w-full sm:w-1/4 sm:px-10px">
-                    <button class="form-submit block w-full" name="upload">
-                        Upload Transactions
+                <div class="w-full sm:w-1/3 sm:px-10px">
+                    <span class="text-18px font-bold pb-10px sm:pb-20px block">Name</span>
+                    <input type="text" name="name" class="form-input" />
+                </div>
+
+                <div class="w-full sm:w-1/6 sm:px-10px">
+                    <button class="form-submit block w-full" name="add">
+                        Add Transaction
                     </button>
                 </div>
 
             </div>
+
         </form>
 
         <div class="w-full overflow-x-auto pt-40px overflow-y-hidden">
