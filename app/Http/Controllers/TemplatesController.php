@@ -51,4 +51,61 @@ class TemplatesController extends Controller
 
         return redirect('/dashboard/accounts/' . $accountId . '/templates');
     }
+
+    public function getDeactivate(
+        int $accountId,
+        int $templateId,
+        TemplatesService $templatesService
+    ): RedirectResponse {
+        try {
+            $templatesService->deactivateTemplate(
+                $accountId,
+                $templateId
+            );
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Deactivate Template ' . $e->getMessage());
+        }
+
+        Session::flash('success', 'Deactivated Template');
+
+        return redirect('/dashboard/accounts/' . $accountId . '/templates');
+    }
+
+    public function getActivate(
+        int $accountId,
+        int $templateId,
+        TemplatesService $templatesService
+    ): RedirectResponse {
+        try {
+            $templatesService->activateTemplate(
+                $accountId,
+                $templateId
+            );
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Activate Template ' . $e->getMessage());
+        }
+
+        Session::flash('success', 'Activated Template');
+
+        return redirect('/dashboard/accounts/' . $accountId . '/templates');
+    }
+
+    public function getDelete(
+        int $accountId,
+        int $templateId,
+        TemplatesService $templatesService
+    ): RedirectResponse {
+        try {
+            $templatesService->deleteTemplate(
+                $accountId,
+                $templateId
+            );
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Delete Template ' . $e->getMessage());
+        }
+
+        Session::flash('success', 'Deleted Template');
+
+        return redirect('/dashboard/accounts/' . $accountId . '/templates');
+    }
 }

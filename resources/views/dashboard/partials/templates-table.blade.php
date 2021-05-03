@@ -25,9 +25,13 @@
                     @endif
                 </td>
                 <td>
-                    <a class="link pri" href="/dashboard/templates/{{ $template->id }}/edit">Edit</a> |
-                    <a class="link pri" href="/dashboard/templates/{{ $template->id }}/deactivate">Deactivate</a> |
-                    <a class="link pri" href="/dashboard/templates/{{ $template->id }}/delete">Delete</a>
+                    <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/templates/{{ $template->id }}/edit">Edit</a> |
+                    @if($template->is_active === true)
+                        <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/templates/{{ $template->id }}/deactivate">Deactivate</a> |
+                    @else
+                        <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/templates/{{ $template->id }}/activate">Activate</a> |
+                    @endif
+                    <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/templates/{{ $template->id }}/delete">Delete</a>
                 </td>
             </tr>
         @endforeach

@@ -42,22 +42,45 @@ Route::prefix('dashboard')
                     AccountsController::class,
                     'postView',
                 ]);
+            });
 
-                Route::get('/transactions', [
+        Route::prefix('accounts/{accountId}/transactions')
+            ->group(function () {
+                Route::get('/', [
                     TransactionsController::class,
                     'getIndex',
                 ]);
-                Route::post('/transactions', [
+                Route::post('/', [
                     TransactionsController::class,
                     'postIndex',
                 ]);
-                Route::get('/templates', [
+            });
+
+        Route::prefix('accounts/{accountId}/templates')
+            ->group(function () {
+                Route::get('/', [
                     TemplatesController::class,
                     'getIndex',
                 ]);
-                Route::post('/templates', [
+                Route::post('/', [
                     TemplatesController::class,
                     'postIndex',
+                ]);
+            });
+
+        Route::prefix('accounts/{accountId}/templates/{templateId}')
+            ->group(function () {
+                Route::get('/deactivate', [
+                    TemplatesController::class,
+                    'getDeactivate',
+                ]);
+                Route::get('/activate', [
+                    TemplatesController::class,
+                    'getActivate',
+                ]);
+                Route::get('/delete', [
+                    TemplatesController::class,
+                    'getDelete',
                 ]);
             });
 
@@ -83,7 +106,6 @@ Route::prefix('dashboard')
                     TagsController::class,
                     'postView',
                 ]);
-
                 Route::get('/delete', [
                     TagsController::class,
                     'getDelete',

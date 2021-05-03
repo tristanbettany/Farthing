@@ -17,6 +17,12 @@ final class TemplatesService extends AbstractService
         $this->transactionsService = $transactionsService;
     }
 
+    public function getTemplate($templateId): TemplateModel
+    {
+        return TemplateModel::where('id', $templateId)
+            ->firstOrFail();
+    }
+
     public function getTemplatesQuery(AccountModel $account): Builder
     {
         return TemplateModel::query()
@@ -72,5 +78,53 @@ final class TemplatesService extends AbstractService
                 );
             }
         }
+    }
+
+    public function removeTemplateTransactions($templateId): void
+    {
+        TransactionModel::query()
+            ->where('template_id', $templateId)
+            ->delete();
+    }
+
+    public function deactivateTemplate(
+        int $accountId,
+        int $templateId
+    ): void {
+        $this->removeTemplateTransactions($templateId);
+
+        $template = $this->getTemplate($templateId);
+        $template->is_active = false;
+        $template->save();
+
+        $this->transactionsService->recalculateRunningTotals($accountId);
+    }
+
+    public function activateTemplate(
+        int $accountId,
+        int $templateId
+    ): void {
+        $template = $this->getTemplate($templateId);
+        $template->is_active = true;
+        $template->save();
+
+        $this->generateTemplateTransactions(
+            $accountId,
+            $template
+        );
+
+        $this->transactionsService->recalculateRunningTotals($accountId);
+    }
+
+    public function deleteTemplate(
+        int $accountId,
+        int $templateId
+    ): void {
+        $this->removeTemplateTransactions($templateId);
+
+        $template = $this->getTemplate($templateId);
+        $template->delete();
+
+        $this->transactionsService->recalculateRunningTotals($accountId);
     }
 }
