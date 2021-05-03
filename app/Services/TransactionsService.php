@@ -10,7 +10,7 @@ use App\Parsers\NatwestTransactionParser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
 use Exception;
-use DateTimeImmutable;
+use DateTimeInterface;
 
 final class TransactionsService extends AbstractService
 {
@@ -62,10 +62,11 @@ final class TransactionsService extends AbstractService
 
     public function addTransaction(
         int $accountId,
-        DateTimeImmutable $date,
+        DateTimeInterface $date,
         float $amount,
         string $type,
-        string $name
+        string $name,
+        int $templateId = null
     ): TransactionModel {
         $massAssignment = [
             'account_id' => $accountId,
@@ -82,9 +83,15 @@ final class TransactionsService extends AbstractService
             $massAssignment['is_pending'] = true;
         }
 
-        $transaction = TransactionModel::create($massAssignment);
+        if ($type === TransactionModel::TYPE_CASHED) {
+            $massAssignment['is_cashed'] = true;
+        }
 
-        $this->recalculateRunningTotals($accountId);
+        if ($templateId !== null) {
+            $massAssignment['template_id'] = $templateId;
+        }
+
+        $transaction = TransactionModel::create($massAssignment);
 
         return $transaction->fresh();
     }

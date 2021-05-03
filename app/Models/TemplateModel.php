@@ -33,4 +33,9 @@ class TemplateModel extends Model
     {
         return $this->belongsTo(AccountModel::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(TransactionModel::class);
+    }
 }

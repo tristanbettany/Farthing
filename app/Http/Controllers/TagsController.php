@@ -8,6 +8,7 @@ use App\Services\TagsService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
+use Exception;
 
 class TagsController extends Controller
 {
@@ -34,12 +35,18 @@ class TagsController extends Controller
     ): RedirectResponse {
         $validatedInput = $request->validated();
 
-        $tag = $tagsService->addTag(
-            $accountId,
-            $validatedInput['name'],
-            $validatedInput['regex'],
-            $validatedInput['hex_code']
-        );
+        try {
+            $tag = $tagsService->addTag(
+                $accountId,
+                $validatedInput['name'],
+                $validatedInput['regex'],
+                $validatedInput['hex_code']
+            );
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Add Tag ' . $e->getMessage());
+        }
+
+        Session::flash('success', 'Added Tag');
 
         return redirect('/dashboard/accounts/' . $accountId . '/tags');
     }
@@ -67,12 +74,16 @@ class TagsController extends Controller
     ): RedirectResponse {
         $validatedInput = $request->validated();
 
-        $tag = $tagsService->updateTag(
-            $tagId,
-            $validatedInput['name'],
-            $validatedInput['regex'],
-            $validatedInput['hex_code']
-        );
+        try {
+            $tag = $tagsService->updateTag(
+                $tagId,
+                $validatedInput['name'],
+                $validatedInput['regex'],
+                $validatedInput['hex_code']
+            );
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Update Tag ' . $e->getMessage());
+        }
 
         Session::flash('success', 'Updated Tag');
 
@@ -84,7 +95,11 @@ class TagsController extends Controller
         int $tagId,
         TagsService $tagsService
     ): RedirectResponse {
-        $tagsService->deleteTag($tagId);
+        try {
+            $tagsService->deleteTag($tagId);
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Delete Tag ' . $e->getMessage());
+        }
 
         Session::flash('success', 'Deleted Tag');
 

@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
-final class TagRequest extends FormRequest
+final class TemplateRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,9 +15,10 @@ final class TagRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'amount' => 'required',
+            'occurances' => 'required',
+            'occurance_syntax' => 'required',
             'name' => 'required',
-            'regex' => 'required',
-            'hex_code' => 'required',
         ];
     }
 }

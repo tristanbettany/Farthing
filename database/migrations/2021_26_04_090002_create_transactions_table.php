@@ -18,12 +18,17 @@ class CreateTransactionsTable extends Migration
             $table->boolean('is_future')->default(false);
             $table->dateTime('date');
             $table->float('running_total')->nullable();
+            $table->unsignedBigInteger('template_id')->nullable();
 
             $table->timestamps();
 
             $table->foreign('account_id')
                 ->references('id')
                 ->on('accounts');
+
+            $table->foreign('template_id')
+                ->references('id')
+                ->on('templates');
         });
     }
 

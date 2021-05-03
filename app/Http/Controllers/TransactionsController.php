@@ -32,11 +32,8 @@ class TransactionsController extends Controller
     public function postIndex(
         int $accountId,
         Request $request,
-        AccountsService $accountsService,
         TransactionsService $transactionsService
     ): RedirectResponse {
-        $account = $accountsService->getAccount($accountId);
-
         if ($request->has('add') === true) {
             try {
                 $transactionsService->addTransaction(
@@ -46,6 +43,8 @@ class TransactionsController extends Controller
                     $request->get('type'),
                     $request->get('name'),
                 );
+
+                $transactionsService->recalculateRunningTotals($accountId);
             } catch (Exception $e) {
                 Session::flash('error', 'Failed To Add Transaction ' . $e->getMessage());
             }

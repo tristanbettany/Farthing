@@ -23,6 +23,7 @@ class TransactionModel extends Model
         'is_cashed',
         'is_pending',
         'is_future',
+        'template_id',
     ];
 
     protected $casts = [
@@ -53,6 +54,11 @@ class TransactionModel extends Model
             'transaction_id',
             'tag_id',
         );
+    }
+
+    public function template()
+    {
+        return $this->belongsTo(TemplateModel::class);
     }
 
     public function getTruncatedName()

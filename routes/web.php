@@ -55,6 +55,10 @@ Route::prefix('dashboard')
                     TemplatesController::class,
                     'getIndex',
                 ]);
+                Route::post('/templates', [
+                    TemplatesController::class,
+                    'postIndex',
+                ]);
             });
 
         Route::prefix('accounts/{accountId}/tags')

@@ -7,6 +7,7 @@ use App\Services\AccountsService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
+use Exception;
 
 class AccountsController extends Controller
 {
@@ -26,11 +27,17 @@ class AccountsController extends Controller
     ): RedirectResponse {
         $validatedInput = $request->validated();
 
-        $account = $accountsService->addAccount(
-            $validatedInput['name'],
-            $validatedInput['sort_code'],
-            $validatedInput['account_number']
-        );
+        try {
+            $account = $accountsService->addAccount(
+                $validatedInput['name'],
+                $validatedInput['sort_code'],
+                $validatedInput['account_number']
+            );
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Add Account ' . $e->getMessage());
+        }
+
+        Session::flash('success', 'Added Account');
 
         return redirect('/dashboard/accounts');
     }
@@ -52,12 +59,16 @@ class AccountsController extends Controller
     ): RedirectResponse {
         $validatedInput = $request->validated();
 
-        $account = $accountsService->updateAccount(
-            $accountId,
-            $validatedInput['name'],
-            $validatedInput['sort_code'],
-            $validatedInput['account_number']
-        );
+        try {
+            $account = $accountsService->updateAccount(
+                $accountId,
+                $validatedInput['name'],
+                $validatedInput['sort_code'],
+                $validatedInput['account_number']
+            );
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Update Account ' . $e->getMessage());
+        }
 
         Session::flash('success', 'Updated Account');
 
