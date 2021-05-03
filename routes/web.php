@@ -56,6 +56,18 @@ Route::prefix('dashboard')
                 ]);
             });
 
+        Route::prefix('accounts/{accountId}/transactions/{transactionId}')
+            ->group(function () {
+                Route::get('/', [
+                    TransactionsController::class,
+                    'getView',
+                ]);
+                Route::post('/', [
+                    TransactionsController::class,
+                    'postView',
+                ]);
+            });
+
         Route::prefix('accounts/{accountId}/templates')
             ->group(function () {
                 Route::get('/', [

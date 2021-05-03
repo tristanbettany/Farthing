@@ -15,6 +15,12 @@ use DateTimeInterface;
 
 final class TransactionsService extends AbstractService
 {
+    public function getTransaction(int $transactionId): TransactionModel
+    {
+        return TransactionModel::where('id', $transactionId)
+            ->firstOrFail();
+    }
+
     public function getTransactionsQuery(AccountModel $account): Builder
     {
         return TransactionModel::query()
@@ -59,6 +65,23 @@ final class TransactionsService extends AbstractService
         } else {
             throw new Exception('Nothing to upload');
         }
+    }
+
+    public function updateTransaction(
+        int $transactionId,
+        string $name,
+        float $amount,
+        DateTimeInterface $date
+    ): TransactionModel {
+        $transaction = $this->getTransaction($transactionId);
+
+        $transaction->name = $name;
+        $transaction->amount = $amount;
+        $transaction->date = $date;
+
+        $transaction->save();
+
+        return $transaction;
     }
 
     public function addTransaction(

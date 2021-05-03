@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TransactionRequest;
 use App\Services\AccountsService;
 use App\Services\TransactionsService;
 use Illuminate\Contracts\Support\Renderable;
@@ -65,6 +66,46 @@ class TransactionsController extends Controller
 
             Session::flash('success', 'Uploaded Transactions');
         }
+
+        return redirect('/dashboard/accounts/' . $accountId . '/transactions');
+    }
+
+    public function getView(
+        int $accountId,
+        int $transactionId,
+        AccountsService $accountsService,
+        TransactionsService $transactionsService
+    ): Renderable {
+        $account = $accountsService->getAccount($accountId);
+        $transaction = $transactionsService->getTransaction($transactionId);
+
+        return view('dashboard.transactions.view')
+            ->with('account', $account)
+            ->with('transaction', $transaction);
+    }
+
+    public function postView(
+        int $accountId,
+        int $transactionId,
+        TransactionRequest $request,
+        TransactionsService $transactionsService
+    ): RedirectResponse {
+        $validatedInput = $request->validated();
+
+        try {
+            $transaction = $transactionsService->updateTransaction(
+                $transactionId,
+                $validatedInput['name'],
+                (float) $validatedInput['amount'],
+                new DateTimeImmutable($validatedInput['date'])
+            );
+
+            $transactionsService->recalculateRunningTotals($accountId);
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Update Transaction ' . $e->getMessage());
+        }
+
+        Session::flash('success', 'Updated Transaction');
 
         return redirect('/dashboard/accounts/' . $accountId . '/transactions');
     }

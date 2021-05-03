@@ -32,7 +32,11 @@
                         <span class="rounded bg-pri-400 px-10px py-5px text-white">Future</span>
                     @endif
                 </td>
-                <td></td>
+                <td>
+                    @if($transaction->is_cashed === false)
+                        <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/transactions/{{ $transaction->id }}">Edit</a>
+                    @endif
+                </td>
             </tr>
         @endforeach
     </tbody>
