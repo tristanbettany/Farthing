@@ -37,7 +37,6 @@ final class TagsService extends AbstractService
             'name' => $name,
             'regex' => $regex,
             'hex_code' => $hexCode,
-            'is_active' => true,
         ]);
     }
 

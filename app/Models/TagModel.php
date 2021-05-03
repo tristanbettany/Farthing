@@ -19,11 +19,9 @@ class TagModel extends Model
         'name',
         'regex',
         'hex_code',
-        'is_active',
     ];
 
     protected $casts = [
-        'is_active' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
