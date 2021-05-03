@@ -80,14 +80,6 @@ Route::prefix('dashboard')
                     'postView',
                 ]);
 
-                Route::get('/deactivate', [
-                    TagsController::class,
-                    'getDeactivate',
-                ]);
-                Route::get('/activate', [
-                    TagsController::class,
-                    'getActivate',
-                ]);
                 Route::get('/delete', [
                     TagsController::class,
                     'getDelete',

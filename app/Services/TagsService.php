@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\AccountModel;
+use App\Models\Pivots\TransactionTagPivot;
 use App\Models\TagModel;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -57,27 +58,13 @@ final class TagsService extends AbstractService
         return $tag;
     }
 
-    public function deactivateTag(int $tagId): void
-    {
-        $tag = $this->getTag($tagId);
-
-        $tag->is_active = false;
-
-        $tag->save();
-    }
-
-    public function activateTag(int $tagId): void
-    {
-        $tag = $this->getTag($tagId);
-
-        $tag->is_active = true;
-
-        $tag->save();
-    }
-
     public function deleteTag(int $tagId): void
     {
         $tag = $this->getTag($tagId);
+
+        TransactionTagPivot::query()
+            ->where('tag_id', $tagId)
+            ->delete();
 
         $tag->delete();
     }

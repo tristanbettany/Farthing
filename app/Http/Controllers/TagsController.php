@@ -79,30 +79,6 @@ class TagsController extends Controller
         return redirect('/dashboard/accounts/' . $accountId . '/tags');
     }
 
-    public function getDeactivate(
-        int $accountId,
-        int $tagId,
-        TagsService $tagsService
-    ): RedirectResponse {
-        $tagsService->deactivateTag($tagId);
-
-        Session::flash('success', 'Deactivated Tag');
-
-        return redirect('/dashboard/accounts/' . $accountId . '/tags');
-    }
-
-    public function getActivate(
-        int $accountId,
-        int $tagId,
-        TagsService $tagsService
-    ): RedirectResponse {
-        $tagsService->activateTag($tagId);
-
-        Session::flash('success', 'Activated Tag');
-
-        return redirect('/dashboard/accounts/' . $accountId . '/tags');
-    }
-
     public function getDelete(
         int $accountId,
         int $tagId,

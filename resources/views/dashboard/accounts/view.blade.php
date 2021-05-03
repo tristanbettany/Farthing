@@ -41,22 +41,5 @@
 
         </div>
 
-        <div class="w-full border-b-2 border-ter-200 mb-40px mt-40px"></div>
-
-        <div class="flex flex-row justify-start items-start flex-wrap">
-
-            <div class="w-full pb-10px sm:w-1/4 sm:px-10px">
-                <a href="/dashboard/accounts/{{ $account->id }}/transactions" class="text-center block bg-ter-100 px-20px py-10px hover:text-black hover:bg-white hover:border-ter-200 border-2 border-ter-100">View Transactions</a>
-            </div>
-
-            <div class="w-full pb-10px sm:w-1/4 sm:px-10px">
-                <a href="/dashboard/accounts/{{ $account->id }}/templates" class="text-center block bg-ter-100 px-20px py-10px hover:text-black hover:bg-white hover:border-ter-200 border-2 border-ter-100">View Templates</a>
-            </div>
-
-            <div class="w-full pb-10px sm:w-1/4 sm:px-10px">
-                <a href="/dashboard/accounts/{{ $account->id }}/tags" class="text-center block bg-ter-100 px-20px py-10px hover:text-black hover:bg-white hover:border-ter-200 border-2 border-ter-100">View Tags</a>
-            </div>
-
-        </div>
     </form>
 @endsection
