@@ -26,6 +26,16 @@ final class TransactionsService extends AbstractService
             ->where('account_id', $accountId);
     }
 
+    public function filterTransactionsByDate(
+        Builder $transactionsQuery,
+        DateTimeInterface $from,
+        DateTimeInterface $to
+    ): Builder {
+        return $transactionsQuery
+            ->where('date', '>=', $from)
+            ->where('date', '<=', $to);
+    }
+
     public function orderTransactions(Builder $transactionsQuery): Builder
     {
         return $transactionsQuery->orderByDesc('date')

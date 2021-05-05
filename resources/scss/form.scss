@@ -56,6 +56,16 @@
         focus:outline-none
         focus:border-pri-500;
 
+    &.inverted {
+        @apply
+            bg-ter-800
+            text-white;
+
+        &::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
+    }
+
     &.area {
         @apply
             border-l-2

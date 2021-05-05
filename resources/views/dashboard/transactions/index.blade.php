@@ -1,6 +1,45 @@
 @extends('layouts.dashboard')
 
 @section('sidebar-info')
+    <form class="w-full mb-60px" method="GET">
+
+        @csrf
+
+        <div class="flex flex-row justify-start items-end flex-wrap">
+
+            <div class="w-full my-10px">
+                <a href="/dashboard/accounts/{{ $account->id }}/transactions" class="cursor-pointer block w-full text-center text-white border-2 border-ter-500 py-10px px-20px hover:border-white outline-none">
+                    Clear Filters
+                </a>
+            </div>
+
+            <div class="w-full my-10px">
+                <span class="text-18px font-bold pb-10px block text-white">From</span>
+                <input type="date" name="date-from" class="form-input inverted"
+                   @if(request()->get('date-from') !== null)
+                        value="{{ (new DateTimeImmutable(request()->get('date-from')))->format('Y-m-d') }}"
+                   @endif
+                />
+            </div>
+
+            <div class="w-full my-10px">
+                <span class="text-18px font-bold pb-10px block text-white">To</span>
+                <input type="date" name="date-to" class="form-input inverted"
+                   @if(request()->get('date-to') !== null)
+                        value="{{ (new DateTimeImmutable(request()->get('date-to')))->format('Y-m-d') }}"
+                   @endif
+                />
+            </div>
+
+            <div class="w-full my-10px">
+                <button class="block w-full bg-pri-500 text-white py-10px px-20px text-center hover:bg-ter-800 border-2 border-t-0 border-pri-500 outline-none" name="filter">
+                    Filter Transactions
+                </button>
+            </div>
+
+        </div>
+    </form>
+
     <form class="w-full" method="POST" enctype="multipart/form-data">
 
         @csrf

@@ -16,12 +16,27 @@ class TransactionsController extends Controller
 {
     public function getIndex(
         int $accountId,
+        Request $request,
         AccountsService $accountsService,
         TransactionsService $transactionsService
     ): Renderable {
         $account = $accountsService->getAccount($accountId);
 
         $transactionsQuery = $transactionsService->getTransactionsQuery($accountId);
+
+        if ($request->has('filter') === true) {
+            try {
+                $transactionsQuery = $transactionsService->filterTransactionsByDate(
+                    $transactionsQuery,
+                    new DateTimeImmutable($request->get('date-from')),
+                    new DateTimeImmutable($request->get('date-to'))
+                );
+            } catch (Exception $e) {
+                Session::flash('error', 'Failed To Filter Transactions ' . $e->getMessage());
+            }
+
+            Session::flash('success', 'Showing Filtered Transactions');
+        }
 
         $transactionsQuery = $transactionsService->orderTransactions($transactionsQuery);
 
