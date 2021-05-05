@@ -13,7 +13,12 @@ final class NatwestTransactionParser extends AbstractTransactionParser implement
 
         $parsedRows = [];
         foreach($this->rows as $row) {
-            if (empty($row) === true || count($row) === 1 || $row[0] === 'Date') {
+            if (
+                empty($row) === true
+                || count($row) === 1
+                || $row[0] === 'Date'
+                || empty($row[3]) === true
+            ) {
                 continue;
             }
 
