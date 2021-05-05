@@ -9,14 +9,14 @@
 
             <div class="w-full my-10px">
                 <div class="relative">
-                    <label class="cursor-pointer block w-full text-center text-white border-2 border-ter-500 py-10px px-20px hover:border-white" for="csv">Select File</label>
+                    <label class="cursor-pointer block w-full text-center text-white border-2 border-ter-500 py-10px px-20px hover:border-white outline-none" for="csv">Select File</label>
                     <input type="file" id="csv" name="csv" accept=".csv" required class="absolute top-0px bottom-0px right-0px left-0px m-0px p-0px cursor-pointer opacity-0" style="z-index: -1;">
                 </div>
             </div>
 
             <div class="w-full">
                 <div class="form-select-container">
-                    <select class="form-select" name="bank">
+                    <select class="form-select rounded-b-none" name="bank">
                         <option>{{ \App\Parsers\AbstractTransactionParser::PARSER_NATWEST }}</option>
                     </select>
                     <div class="form-select-icon">
@@ -26,7 +26,7 @@
             </div>
 
             <div class="w-full">
-                <button class="block w-full bg-pri-500 text-white py-10px px-20px text-center hover:bg-ter-800 border-2 border-t-0 border-pri-500" name="upload">
+                <button class="block w-full bg-pri-500 text-white py-10px px-20px text-center hover:bg-ter-800 border-2 border-t-0 border-pri-500 rounded-t-none outline-none" name="upload">
                     Upload Transactions
                 </button>
             </div>
