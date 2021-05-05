@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\AccountModel;
 use App\Models\Pivots\TransactionTagPivot;
 use App\Models\TagModel;
 use App\Models\TransactionModel;
@@ -21,16 +20,31 @@ final class TransactionsService extends AbstractService
             ->firstOrFail();
     }
 
-    public function getTransactionsQuery(AccountModel $account): Builder
+    public function getTransactionsQuery(int $accountId): Builder
     {
         return TransactionModel::query()
-            ->where('account_id', $account->id);
+            ->where('account_id', $accountId);
     }
 
     public function orderTransactions(Builder $transactionsQuery): Builder
     {
         return $transactionsQuery->orderByDesc('date')
             ->orderByDesc('id');
+    }
+
+    public function getExistingTemplateTransaction(
+        int $accountId,
+        int $templateId,
+        string $name,
+        float $amount,
+        DateTimeInterface $date
+    ): ?TransactionModel {
+        return $this->getTransactionsQuery($accountId)
+            ->where('template_id', $templateId)
+            ->where('name', $name)
+            ->where('amount', $amount)
+            ->where('date', $date)
+            ->first();
     }
 
     public function uploadTransactions(

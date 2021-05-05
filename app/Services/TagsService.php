@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\AccountModel;
 use App\Models\Pivots\TransactionTagPivot;
 use App\Models\TagModel;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,10 +14,10 @@ final class TagsService extends AbstractService
             ->firstOrFail();
     }
 
-    public function getTagsQuery(AccountModel $account): Builder
+    public function getTagsQuery(int $accountId): Builder
     {
         return TagModel::query()
-            ->where('account_id', $account->id);
+            ->where('account_id', $accountId);
     }
 
     public function orderTags(Builder $tagsQuery): Builder

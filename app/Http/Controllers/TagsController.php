@@ -19,7 +19,7 @@ class TagsController extends Controller
     ): Renderable {
         $account = $accountsService->getAccount($accountId);
 
-        $tagsQuery = $tagsService->getTagsQuery($account);
+        $tagsQuery = $tagsService->getTagsQuery($accountId);
 
         $tagsQuery = $tagsService->orderTags($tagsQuery);
 

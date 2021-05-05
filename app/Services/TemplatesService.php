@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\AccountModel;
 use App\Models\TemplateModel;
 use App\Models\TransactionModel;
 use Cron\CronExpression;
@@ -23,10 +22,10 @@ final class TemplatesService extends AbstractService
             ->firstOrFail();
     }
 
-    public function getTemplatesQuery(AccountModel $account): Builder
+    public function getTemplatesQuery(int $accountId): Builder
     {
         return TemplateModel::query()
-            ->where('account_id', $account->id);
+            ->where('account_id', $accountId);
     }
 
     public function orderTemplates(Builder $templatesQuery): Builder
@@ -98,14 +97,24 @@ final class TemplatesService extends AbstractService
 
         if (empty($dates) === false) {
             foreach ($dates as $date) {
-                $this->transactionsService->addTransaction(
-                    $accountId,
-                    $date,
-                    $templateModel->amount,
-                    TransactionModel::TYPE_FUTURE,
-                    $templateModel->name,
-                    $templateModel->id
-                );
+                $existingTransaction = $this->transactionsService->getExistingTemplateTransaction(
+                        $accountId,
+                        $templateModel->id,
+                        $templateModel->name,
+                        $templateModel->amount,
+                        $date
+                    );
+
+                if(empty($existingTransaction) === true) {
+                    $this->transactionsService->addTransaction(
+                        $accountId,
+                        $date,
+                        $templateModel->amount,
+                        TransactionModel::TYPE_FUTURE,
+                        $templateModel->name,
+                        $templateModel->id
+                    );
+                }
             }
         }
     }
@@ -123,11 +132,11 @@ final class TemplatesService extends AbstractService
     ): void {
         $this->removeTemplateTransactions($templateId);
 
+        $this->transactionsService->recalculateRunningTotals($accountId);
+
         $template = $this->getTemplate($templateId);
         $template->is_active = false;
         $template->save();
-
-        $this->transactionsService->recalculateRunningTotals($accountId);
     }
 
     public function activateTemplate(
@@ -135,8 +144,6 @@ final class TemplatesService extends AbstractService
         int $templateId
     ): void {
         $template = $this->getTemplate($templateId);
-        $template->is_active = true;
-        $template->save();
 
         $this->generateTemplateTransactions(
             $accountId,
@@ -144,6 +151,9 @@ final class TemplatesService extends AbstractService
         );
 
         $this->transactionsService->recalculateRunningTotals($accountId);
+
+        $template->is_active = true;
+        $template->save();
     }
 
     public function deleteTemplate(

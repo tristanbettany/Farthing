@@ -21,7 +21,7 @@ class TransactionsController extends Controller
     ): Renderable {
         $account = $accountsService->getAccount($accountId);
 
-        $transactionsQuery = $transactionsService->getTransactionsQuery($account);
+        $transactionsQuery = $transactionsService->getTransactionsQuery($accountId);
 
         $transactionsQuery = $transactionsService->orderTransactions($transactionsQuery);
 

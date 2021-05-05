@@ -19,7 +19,7 @@ class TemplatesController extends Controller
     ): Renderable {
         $account = $accountsService->getAccount($accountId);
 
-        $templatesQuery = $templatesService->getTemplatesQuery($account);
+        $templatesQuery = $templatesService->getTemplatesQuery($accountId);
 
         $templatesQuery = $templatesService->orderTemplates($templatesQuery);
 
