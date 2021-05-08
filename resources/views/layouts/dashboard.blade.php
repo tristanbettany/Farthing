@@ -33,7 +33,7 @@
                 @endforeach
             </ul>
 
-            <a href="/" class="sm:absolute sm:bottom-0px sm:left-0px sm:w-300px px-20px py-10px bg-pri-500 text-white cursor-pointer hover:bg-pri-700 block text-right">Logout <i class="text-white fas fa-sign-out-alt"></i></a>
+            <a href="/logout" class="sm:absolute sm:bottom-0px sm:left-0px sm:w-300px px-20px py-10px bg-pri-500 text-white cursor-pointer hover:bg-pri-700 block text-right">Logout <i class="text-white fas fa-sign-out-alt"></i></a>
 
             <div class="text-white sm:absolute block sm:w-300px sm:left-0px sm:bottom-100px px-20px py-10px">
                 @yield('sidebar-info')

@@ -2,18 +2,31 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\TemplatesController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\TagsController;
+use App\Http\Controllers\GithubLoginController;
 
 Route::get('/', [
     LoginController::class,
     'getIndex',
+])->name('login');
+
+Route::get('/logout', [
+    LogoutController::class,
+    'getIndex',
 ]);
 
-Route::prefix('dashboard')
+Route::get('/github/login', [
+    GithubLoginController::class,
+    'getIndex',
+]);
+
+Route::middleware(['auth:web'])
+    ->prefix('dashboard')
     ->group( function() {
         Route::get('/', [
             DashboardController::class,
