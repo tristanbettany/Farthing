@@ -13,8 +13,13 @@ class CreateAccountsTable extends Migration
             $table->string('account_number')->unique();
             $table->string('sort_code');
             $table->string('name');
+            $table->unsignedBigInteger('user_id');
 
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
         });
     }
 

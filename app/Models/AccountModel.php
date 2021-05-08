@@ -17,6 +17,7 @@ class AccountModel extends Model
         'account_number',
         'sort_code',
         'name',
+        'user_id',
     ];
 
     protected $casts = [
@@ -37,5 +38,10 @@ class AccountModel extends Model
     public function tags()
     {
         return $this->hasMany(TagModel::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

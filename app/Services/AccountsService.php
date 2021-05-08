@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\AccountModel;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 final class AccountsService extends AbstractService
 {
@@ -15,7 +16,8 @@ final class AccountsService extends AbstractService
 
     public function getAccountsQuery(): Builder
     {
-        return AccountModel::query();
+        return AccountModel::query()
+            ->where('user_id', Auth::id());
     }
 
     public function orderAccounts(Builder $accountsQuery): Builder
@@ -32,6 +34,7 @@ final class AccountsService extends AbstractService
             'name' => $name,
             'sort_code' => $sortCode,
             'account_number' => $accountNumber,
+            'user_id' => Auth::id(),
         ]);
     }
 
