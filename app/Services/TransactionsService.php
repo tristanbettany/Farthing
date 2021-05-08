@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
 use Exception;
 use DateTimeInterface;
+use Illuminate\Support\Facades\DB;
 
 final class TransactionsService extends AbstractService
 {
@@ -157,10 +158,7 @@ final class TransactionsService extends AbstractService
 
         return $transaction->fresh();
     }
-
-    /**
-     * @TODO: This is way to slow #ORMSAREPANTS, optimize it!
-     */
+    
     public function recalculateRunningTotals(int $accountId): void
     {
         $lastCashedTransaction = Transaction::query()
@@ -184,11 +182,36 @@ final class TransactionsService extends AbstractService
             $lastRunningTotal = $lastCashedTransaction->running_total;
         }
 
+        $rowValues=[];
         foreach($otherTransactions as $transaction) {
-            $transaction->running_total = $lastRunningTotal + $transaction->amount;
-            $transaction->save();
+            $newRunningTotal = $lastRunningTotal + $transaction->amount;
 
-            $lastRunningTotal = $transaction->running_total;
+            $rowValues[] = sprintf("
+                (%s, %s, '%s', '%s', %s, '%s')
+            ",
+                $transaction->id,
+                $newRunningTotal,
+                $accountId,
+                $transaction->name,
+                $transaction->amount,
+                $transaction->date
+            );
+
+            $lastRunningTotal = $newRunningTotal;
+        }
+
+        if (empty($rowValues) === false) {
+            $sql = sprintf("
+                INSERT INTO transactions
+                (`id`, `running_total`, `account_id`, `name`, `amount`, `date`)
+                VALUES %s
+                ON DUPLICATE KEY UPDATE
+                `running_total`=VALUES(`running_total`);
+            ",
+                implode(',', $rowValues)
+            );
+
+            DB::statement($sql);
         }
     }
 }
