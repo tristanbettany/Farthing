@@ -40,7 +40,10 @@ class TransactionsController extends Controller
 
         $transactionsQuery = $transactionsService->orderTransactions($transactionsQuery);
 
-        if ($request->has('page') === false) {
+        if (
+            $request->has('page') === false
+            && $request->has('filter') === false
+        ) {
             $page = $transactionsService->determineStartPage($accountId);
         }
 
