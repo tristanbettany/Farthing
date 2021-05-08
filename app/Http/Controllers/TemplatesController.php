@@ -71,6 +71,29 @@ class TemplatesController extends Controller
         return redirect('/dashboard/accounts/' . $accountId . '/templates');
     }
 
+    public function getDeactivateAll(
+        int $accountId,
+        TemplatesService $templatesService
+    ): RedirectResponse {
+        try {
+            $templates = $templatesService->getTemplatesQuery($accountId)
+                ->get();
+
+            foreach ($templates as $template) {
+                $templatesService->deactivateTemplate(
+                    $accountId,
+                    $template->id
+                );
+            }
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Deactivate All Templates ' . $e->getMessage());
+        }
+
+        Session::flash('success', 'Deactivated All Templates');
+
+        return redirect('/dashboard/accounts/' . $accountId . '/templates');
+    }
+
     public function getActivate(
         int $accountId,
         int $templateId,
@@ -86,6 +109,29 @@ class TemplatesController extends Controller
         }
 
         Session::flash('success', 'Activated Template');
+
+        return redirect('/dashboard/accounts/' . $accountId . '/templates');
+    }
+
+    public function getActivateAll(
+        int $accountId,
+        TemplatesService $templatesService
+    ): RedirectResponse {
+        try {
+            $templates = $templatesService->getTemplatesQuery($accountId)
+                ->get();
+
+            foreach ($templates as $template) {
+                $templatesService->activateTemplate(
+                    $accountId,
+                    $template->id
+                );
+            }
+        } catch (Exception $e) {
+            Session::flash('error', 'Failed To Activate All Templates ' . $e->getMessage());
+        }
+
+        Session::flash('success', 'Activated All Templates');
 
         return redirect('/dashboard/accounts/' . $accountId . '/templates');
     }

@@ -1,5 +1,23 @@
 @extends('layouts.dashboard')
 
+@section('sidebar-info')
+    <div class="flex flex-row justify-start items-end flex-wrap">
+
+        <div class="w-full my-10px">
+            <a href="/dashboard/accounts/{{ $account->id }}/templates/deactivate" class="cursor-pointer block w-full text-center text-white border-2 border-ter-500 py-10px px-20px hover:border-white outline-none">
+                Deactivate All Templates
+            </a>
+        </div>
+
+        <div class="w-full my-10px">
+            <a href="/dashboard/accounts/{{ $account->id }}/templates/activate" class="cursor-pointer block w-full text-center text-white border-2 border-ter-500 py-10px px-20px hover:border-white outline-none">
+                Activate All Templates
+            </a>
+        </div>
+
+    </div>
+@endsection
+
 @section('content')
     <h1>{{ $account->name }}, Templates</h1>
 

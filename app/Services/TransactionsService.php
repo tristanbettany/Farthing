@@ -158,7 +158,7 @@ final class TransactionsService extends AbstractService
 
         return $transaction->fresh();
     }
-    
+
     public function recalculateRunningTotals(int $accountId): void
     {
         $lastCashedTransaction = Transaction::query()

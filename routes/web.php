@@ -95,6 +95,15 @@ Route::middleware(['auth:web', 'validate.account'])
                     TemplatesController::class,
                     'postIndex',
                 ]);
+                Route::get('/deactivate', [
+                    TemplatesController::class,
+                    'getDeactivateAll',
+                ]);
+
+                Route::get('/activate', [
+                    TemplatesController::class,
+                    'getActivateAll',
+                ]);
             });
 
         Route::prefix('accounts/{accountId}/templates/{templateId}')
