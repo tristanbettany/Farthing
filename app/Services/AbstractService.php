@@ -7,10 +7,17 @@ use Illuminate\Database\Eloquent\Builder;
 
 class AbstractService
 {
-    private int $paginationSize = 25;
+    protected int $paginationSize = 25;
 
-    public function paginateRecords(Builder $query): LengthAwarePaginator
-    {
-        return $query->paginate($this->paginationSize);
+    public function paginateRecords(
+        Builder $query,
+        int $page = null
+    ): LengthAwarePaginator {
+        return $query->paginate(
+            $this->paginationSize,
+            ['*'],
+            'page',
+            $page
+        );
     }
 }

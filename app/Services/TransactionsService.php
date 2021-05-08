@@ -159,6 +159,25 @@ final class TransactionsService extends AbstractService
         return $transaction->fresh();
     }
 
+    public function countUncashedTransactions(int $accountId): int
+    {
+        return Transaction::query()
+            ->where('account_id', $accountId)
+            ->where('is_cashed', false)
+            ->orderBy('date', 'ASC')
+            ->orderBy('id', 'ASC')
+            ->count();
+    }
+
+    public function determineStartPage(int $accountId): int
+    {
+        $uncashedCount = $this->countUncashedTransactions($accountId);
+
+        $uncashedCount = $uncashedCount + 2;
+
+        return ceil($uncashedCount / $this->paginationSize);
+    }
+
     public function recalculateRunningTotals(int $accountId): void
     {
         $lastCashedTransaction = Transaction::query()

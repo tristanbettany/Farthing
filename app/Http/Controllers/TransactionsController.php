@@ -40,8 +40,12 @@ class TransactionsController extends Controller
 
         $transactionsQuery = $transactionsService->orderTransactions($transactionsQuery);
 
+        if ($request->has('page') === false) {
+            $page = $transactionsService->determineStartPage($accountId);
+        }
+
         return view('dashboard.transactions.index')
-            ->with('transactions', $transactionsService->paginateRecords($transactionsQuery))
+            ->with('transactions', $transactionsService->paginateRecords($transactionsQuery, $page ?? null))
             ->with('account', $account);
     }
 
