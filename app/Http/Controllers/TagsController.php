@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TagRequest;
+use App\Jobs\ProcessTagsJob;
 use App\Services\AccountsService;
 use App\Services\TagsService;
 use Illuminate\Contracts\Support\Renderable;
@@ -102,6 +103,16 @@ class TagsController extends Controller
         }
 
         Session::flash('success', 'Deleted Tag');
+
+        return redirect('/dashboard/accounts/' . $accountId . '/tags');
+    }
+
+    public function getProcess(
+        int $accountId
+    ): RedirectResponse {
+        ProcessTagsJob::dispatch($accountId);
+
+        Session::flash('success', 'Tags will be processed onto transactions in the background');
 
         return redirect('/dashboard/accounts/' . $accountId . '/tags');
     }

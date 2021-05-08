@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Pivots\TransactionTagPivot;
-use App\Models\TagModel;
-use App\Models\TransactionModel;
+use App\Models\Pivots\TransactionTag;
+use App\Models\Tag;
+use App\Models\Transaction;
 use App\Parsers\AbstractTransactionParser;
 use App\Parsers\NatwestTransactionParser;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,15 +14,19 @@ use DateTimeInterface;
 
 final class TransactionsService extends AbstractService
 {
-    public function getTransaction(int $transactionId): TransactionModel
+    public function __construct(
+        private TagsService $tagsService
+    ) {}
+
+    public function getTransaction(int $transactionId): Transaction
     {
-        return TransactionModel::where('id', $transactionId)
+        return Transaction::where('id', $transactionId)
             ->firstOrFail();
     }
 
     public function getTransactionsQuery(int $accountId): Builder
     {
-        return TransactionModel::query()
+        return Transaction::query()
             ->where('account_id', $accountId);
     }
 
@@ -48,7 +52,7 @@ final class TransactionsService extends AbstractService
         string $name,
         float $amount,
         DateTimeInterface $date
-    ): ?TransactionModel {
+    ): ?Transaction {
         return $this->getTransactionsQuery($accountId)
             ->where('template_id', $templateId)
             ->where('name', $name)
@@ -68,23 +72,22 @@ final class TransactionsService extends AbstractService
         }
 
         if (empty($rows) === false) {
-            $tags = TagModel::query()
-                ->where('account_id', $accountId)
-                ->get();
+            $tags = $this->tagsService->getTagsQuery($accountId)->get();
 
             foreach ($rows as $row) {
                 $row['account_id'] = $accountId;
-                $transaction = TransactionModel::create($row);
+                $transaction = Transaction::create($row);
 
-                foreach ($tags as $tag) {
-                    $match = preg_match('/' . $tag->regex . '/', $transaction->name);
-                    if ($match === 1) {
-                        TransactionTagPivot::create([
+                $this->tagsService->matchTags(
+                    $tags,
+                    $transaction->name,
+                    function ($tag) use ($transaction) {
+                        TransactionTag::create([
                             'transaction_id' => $transaction->id,
                             'tag_id' => $tag->id,
                         ]);
                     }
-                }
+                );
             }
         } else {
             throw new Exception('Nothing to upload');
@@ -96,7 +99,7 @@ final class TransactionsService extends AbstractService
         string $name,
         float $amount,
         DateTimeInterface $date
-    ): TransactionModel {
+    ): Transaction {
         $transaction = $this->getTransaction($transactionId);
 
         $transaction->name = $name;
@@ -112,7 +115,7 @@ final class TransactionsService extends AbstractService
     {
         $transaction = $this->getTransaction($transactionId);
 
-        TransactionTagPivot::query()
+        TransactionTag::query()
             ->where('transaction_id', $transactionId)
             ->delete();
 
@@ -126,7 +129,7 @@ final class TransactionsService extends AbstractService
         string $type,
         string $name,
         int $templateId = null
-    ): TransactionModel {
+    ): Transaction {
         $massAssignment = [
             'account_id' => $accountId,
             'name' => $name,
@@ -134,15 +137,15 @@ final class TransactionsService extends AbstractService
             'date' => $date,
         ];
 
-        if ($type === TransactionModel::TYPE_FUTURE) {
+        if ($type === Transaction::TYPE_FUTURE) {
             $massAssignment['is_future'] = true;
         }
 
-        if ($type === TransactionModel::TYPE_PENDING) {
+        if ($type === Transaction::TYPE_PENDING) {
             $massAssignment['is_pending'] = true;
         }
 
-        if ($type === TransactionModel::TYPE_CASHED) {
+        if ($type === Transaction::TYPE_CASHED) {
             $massAssignment['is_cashed'] = true;
         }
 
@@ -150,7 +153,7 @@ final class TransactionsService extends AbstractService
             $massAssignment['template_id'] = $templateId;
         }
 
-        $transaction = TransactionModel::create($massAssignment);
+        $transaction = Transaction::create($massAssignment);
 
         return $transaction->fresh();
     }
@@ -160,7 +163,7 @@ final class TransactionsService extends AbstractService
      */
     public function recalculateRunningTotals(int $accountId): void
     {
-        $lastCashedTransaction = TransactionModel::query()
+        $lastCashedTransaction = Transaction::query()
             ->where('account_id', $accountId)
             ->where('is_cashed', true)
             ->orderByDesc('date')
@@ -168,7 +171,7 @@ final class TransactionsService extends AbstractService
             ->limit(1)
             ->first();
 
-        $otherTransactions = TransactionModel::query()
+        $otherTransactions = Transaction::query()
             ->where('account_id', $accountId)
             ->where('is_cashed', false)
             ->orderBy('date', 'ASC')

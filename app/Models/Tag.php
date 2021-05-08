@@ -2,40 +2,47 @@
 
 namespace App\Models;
 
+use App\Models\Pivots\TransactionTag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class TemplateModel extends Model
+class Tag extends Model
 {
     use HasFactory;
     use Notifiable;
 
-    protected $table = 'templates';
+    protected $table = 'tags';
 
     protected $fillable = [
         'account_id',
         'name',
-        'amount',
-        'occurances',
-        'occurance_syntax',
+        'regex',
+        'hex_code',
     ];
 
     protected $casts = [
-        'amount' => 'float',
-        'occurances' => 'integer',
-        'is_active' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
     public function account()
     {
-        return $this->belongsTo(AccountModel::class);
+        return $this->belongsTo(Account::class);
     }
 
     public function transactions()
     {
-        return $this->hasMany(TransactionModel::class);
+        return $this->belongsToMany(
+            Transaction::class,
+            TransactionTag::class,
+            'tag_id',
+            'transaction_id',
+        );
+    }
+
+    public function getTruncatedName()
+    {
+        return substr($this->name, 0, 10);
     }
 }

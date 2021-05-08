@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Pivots\TransactionTagPivot;
+use App\Models\Pivots\TransactionTag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class TransactionModel extends Model
+class Transaction extends Model
 {
     use HasFactory;
     use Notifiable;
@@ -43,14 +43,18 @@ class TransactionModel extends Model
 
     public function account()
     {
-        return $this->belongsTo(AccountModel::class);
+        return $this->belongsTo(
+            Account::class,
+            'account_id',
+            'id'
+        );
     }
 
     public function tags()
     {
         return $this->belongsToMany(
-            TagModel::class,
-            TransactionTagPivot::class,
+            Tag::class,
+            TransactionTag::class,
             'transaction_id',
             'tag_id',
         );
@@ -58,7 +62,7 @@ class TransactionModel extends Model
 
     public function template()
     {
-        return $this->belongsTo(TemplateModel::class);
+        return $this->belongsTo(Template::class);
     }
 
     public function getTruncatedName()

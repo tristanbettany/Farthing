@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\AccountModel;
+use App\Models\Account;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +17,7 @@ class ValidateAccount
     ): Response {
         $params = $request->route()->parameters;
         if(empty($params['accountId']) === false) {
-            $account = AccountModel::where('id', $params['accountId'])->first();
+            $account = Account::where('id', $params['accountId'])->first();
             if (
                 empty($account) === true
                 || $account->user_id !== Auth::id()

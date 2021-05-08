@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class AccountModel extends Model
+class Account extends Model
 {
     use HasFactory;
     use Notifiable;
@@ -27,17 +27,17 @@ class AccountModel extends Model
 
     public function transactions()
     {
-        return $this->hasMany(TransactionModel::class);
+        return $this->hasMany(Transaction::class);
     }
 
     public function templates()
     {
-        return $this->hasMany(TemplateModel::class);
+        return $this->hasMany(Template::class);
     }
 
     public function tags()
     {
-        return $this->hasMany(TagModel::class);
+        return $this->hasMany(Tag::class);
     }
 
     public function user()

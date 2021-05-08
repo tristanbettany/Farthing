@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\TemplateModel;
-use App\Models\TransactionModel;
+use App\Models\Template;
+use App\Models\Transaction;
 use Cron\CronExpression;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -16,15 +16,15 @@ final class TemplatesService extends AbstractService
         $this->transactionsService = $transactionsService;
     }
 
-    public function getTemplate($templateId): TemplateModel
+    public function getTemplate($templateId): Template
     {
-        return TemplateModel::where('id', $templateId)
+        return Template::where('id', $templateId)
             ->firstOrFail();
     }
 
     public function getTemplatesQuery(int $accountId): Builder
     {
-        return TemplateModel::query()
+        return Template::query()
             ->where('account_id', $accountId);
     }
 
@@ -40,7 +40,7 @@ final class TemplatesService extends AbstractService
         float $amount,
         int $occurances,
         string $occuranceSyntax
-    ): TemplateModel {
+    ): Template {
         $template = $this->getTemplate($templateId);
 
         $template->name = $name;
@@ -69,8 +69,8 @@ final class TemplatesService extends AbstractService
         int $occurances,
         string $occuranceSyntax,
         string $name
-    ): TemplateModel {
-        $template = TemplateModel::create([
+    ): Template {
+        $template = Template::create([
             'account_id' => $accountId,
             'amount' => $amount,
             'occurances' => $occurances,
@@ -90,7 +90,7 @@ final class TemplatesService extends AbstractService
 
     public function generateTemplateTransactions(
         int $accountId,
-        TemplateModel $templateModel
+        Template $templateModel
     ): void {
         $dates = (new CronExpression($templateModel->occurance_syntax))
             ->getMultipleRunDates($templateModel->occurances);
@@ -110,7 +110,7 @@ final class TemplatesService extends AbstractService
                         $accountId,
                         $date,
                         $templateModel->amount,
-                        TransactionModel::TYPE_FUTURE,
+                        Transaction::TYPE_FUTURE,
                         $templateModel->name,
                         $templateModel->id
                     );
@@ -121,7 +121,7 @@ final class TemplatesService extends AbstractService
 
     public function removeTemplateTransactions($templateId): void
     {
-        TransactionModel::query()
+        Transaction::query()
             ->where('template_id', $templateId)
             ->delete();
     }

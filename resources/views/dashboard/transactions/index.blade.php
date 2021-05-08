@@ -99,8 +99,8 @@
                     <span class="text-18px font-bold pb-10px block">Type</span>
                     <div class="form-select-container">
                         <select class="form-select" name="type">
-                            <option>{{ \App\Models\TransactionModel::TYPE_FUTURE }}</option>
-                            <option>{{ \App\Models\TransactionModel::TYPE_PENDING }}</option>
+                            <option>{{ \App\Models\Transaction::TYPE_FUTURE }}</option>
+                            <option>{{ \App\Models\Transaction::TYPE_PENDING }}</option>
                         </select>
                         <div class="form-select-icon">
                             <i class="fas fa-caret-down"></i>

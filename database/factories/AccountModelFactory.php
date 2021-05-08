@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\AccountModel;
+use App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AccountModelFactory extends Factory
 {
-    protected $model = AccountModel::class;
+    protected $model = Account::class;
 
     public function definition(): array
     {

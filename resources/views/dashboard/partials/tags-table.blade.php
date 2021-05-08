@@ -16,7 +16,7 @@
                 </td>
                 <td>{{ $tag->regex }}</td>
                 <td>
-                    <span class="rounded px-10px py-5px" style="background-color:#{{ $tag->hex_code }};">{{ $tag->hex_code }}</span>
+                    <span class="rounded px-15px" style="background-color:#{{ $tag->hex_code }};"></span>&nbsp;&nbsp;{{ $tag->hex_code }}
                 </td>
                 <td>
                     <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}/delete">Delete</a>

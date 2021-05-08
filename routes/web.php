@@ -131,6 +131,10 @@ Route::middleware(['auth:web', 'validate.account'])
                     TagsController::class,
                     'postIndex',
                 ]);
+                Route::get('/process', [
+                    TagsController::class,
+                    'getProcess',
+                ]);
             });
 
         Route::prefix('accounts/{accountId}/tags/{tagId}')

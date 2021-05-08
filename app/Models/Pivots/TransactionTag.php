@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Notifications\Notifiable;
 
-class TransactionTagPivot extends Pivot
+class TransactionTag extends Pivot
 {
     use HasFactory;
     use Notifiable;

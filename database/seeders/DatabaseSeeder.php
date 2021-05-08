@@ -2,28 +2,28 @@
 
 namespace Database\Seeders;
 
-use App\Models\AccountModel;
-use App\Models\Pivots\TransactionTagPivot;
-use App\Models\TagModel;
-use App\Models\TemplateModel;
-use App\Models\TransactionModel;
+use App\Models\Account;
+use App\Models\Pivots\TransactionTag;
+use App\Models\Tag;
+use App\Models\Template;
+use App\Models\Transaction;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $accounts = AccountModel::factory()
+        $accounts = Account::factory()
             ->count(1)
             ->create();
 
-        $transactions = TransactionModel::factory()
+        $transactions = Transaction::factory()
             ->count(50)
             ->create([
                 'account_id' => $accounts->first()->id,
             ]);
 
-        $tags = TagModel::factory()
+        $tags = Tag::factory()
             ->count(5)
             ->create([
                 'account_id' => $accounts->first()->id,
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ($transactions as $transaction) {
             foreach ($tags as $tag) {
-                $transactionTag = TransactionTagPivot::factory()
+                $transactionTag = TransactionTag::factory()
                     ->count(1)
                     ->create([
                         'transaction_id' => $transaction->id,
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        $templates = TemplateModel::factory()
+        $templates = Template::factory()
             ->count(5)
             ->create([
                 'account_id' => $accounts->first()->id,

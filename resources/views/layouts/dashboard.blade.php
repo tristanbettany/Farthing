@@ -19,7 +19,7 @@
 
             <ul>
                 <li class="cursor-pointer bg-ter-700"><a href="/dashboard/accounts" class="py-10px px-20px text-ter-300 block">Accounts</a></li>
-                @foreach(\App\Models\AccountModel::where('user_id', \Illuminate\Support\Facades\Auth::id())->get() as $account)
+                @foreach(\App\Models\Account::where('user_id', \Illuminate\Support\Facades\Auth::id())->get() as $account)
                     <li class="cursor-pointer group relative">
                         <a href="/dashboard/accounts/{{ $account->id }}" class="py-10px px-30px text-white block hover:bg-ter-600"><i class="text-white fas fa-caret-down"></i> {{ $account->name }}</a>
                         <ul class="hidden sm:group-hover:block">

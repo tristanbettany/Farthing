@@ -2,21 +2,23 @@
 
 namespace App\Services;
 
-use App\Models\Pivots\TransactionTagPivot;
-use App\Models\TagModel;
+use App\Models\Pivots\TransactionTag;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
+use Closure;
+use Illuminate\Support\Collection;
 
 final class TagsService extends AbstractService
 {
-    public function getTag(int $tagId): TagModel
+    public function getTag(int $tagId): Tag
     {
-        return TagModel::where('id', $tagId)
+        return Tag::where('id', $tagId)
             ->firstOrFail();
     }
 
     public function getTagsQuery(int $accountId): Builder
     {
-        return TagModel::query()
+        return Tag::query()
             ->where('account_id', $accountId);
     }
 
@@ -30,8 +32,8 @@ final class TagsService extends AbstractService
         string $name,
         string $regex,
         string $hexCode
-    ): TagModel {
-        return TagModel::create([
+    ): Tag {
+        return Tag::create([
             'account_id' => $accountId,
             'name' => $name,
             'regex' => $regex,
@@ -44,7 +46,7 @@ final class TagsService extends AbstractService
         string $name,
         string $regex,
         string $hexCode
-    ): TagModel {
+    ): Tag {
         $tag = $this->getTag($tagId);
 
         $tag->name = $name;
@@ -60,10 +62,34 @@ final class TagsService extends AbstractService
     {
         $tag = $this->getTag($tagId);
 
-        TransactionTagPivot::query()
+        TransactionTag::query()
             ->where('tag_id', $tagId)
             ->delete();
 
         $tag->delete();
+    }
+
+    public function matchTags(
+        Collection $tags,
+        string $matchString,
+        Closure $closure
+    ) {
+        foreach ($tags as $tag) {
+            $match = preg_match('/' . $tag->regex . '/', $matchString);
+
+            if ($match === 1) {
+                $closure($tag);
+            }
+        }
+    }
+
+    public function dropTags(int $accountId): void
+    {
+        $tags = $this->getTagsQuery($accountId)->get();
+
+        foreach ($tags as $tag) {
+            TransactionTag::query('tag_id', $tag->id)
+                ->delete();
+        }
     }
 }

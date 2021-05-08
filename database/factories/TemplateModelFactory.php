@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\TemplateModel;
+use App\Models\Template;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TemplateModelFactory extends Factory
 {
-    protected $model = TemplateModel::class;
+    protected $model = Template::class;
 
     public function definition(): array
     {

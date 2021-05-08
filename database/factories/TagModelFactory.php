@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\TagModel;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TagModelFactory extends Factory
 {
-    protected $model = TagModel::class;
+    protected $model = Tag::class;
 
     public function definition(): array
     {

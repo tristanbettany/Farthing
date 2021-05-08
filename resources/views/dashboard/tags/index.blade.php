@@ -1,5 +1,17 @@
 @extends('layouts.dashboard')
 
+@section('sidebar-info')
+    <div class="flex flex-row justify-start items-end flex-wrap">
+
+        <div class="w-full my-10px">
+            <a href="/dashboard/accounts/{{ $account->id }}/tags/process" class="cursor-pointer block w-full text-center text-white border-2 border-ter-500 py-10px px-20px hover:border-white outline-none">
+                Re-process Tags
+            </a>
+        </div>
+
+    </div>
+@endsection
+
 @section('content')
     <h1>{{ $account->name }}, Tags</h1>
 
