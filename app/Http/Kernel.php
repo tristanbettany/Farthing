@@ -8,6 +8,7 @@ use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
+use App\Http\Middleware\ValidateAccount;
 use App\Http\Middleware\VerifyCsrfToken;
 use Fruitcake\Cors\HandleCors;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
@@ -63,5 +64,6 @@ class Kernel extends HttpKernel
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
         'session' => StartSession::class,
+        'validate.account' => ValidateAccount::class,
     ];
 }

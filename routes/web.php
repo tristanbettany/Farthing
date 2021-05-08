@@ -25,7 +25,7 @@ Route::get('/github/login', [
     'getIndex',
 ]);
 
-Route::middleware(['auth:web'])
+Route::middleware(['auth:web', 'validate.account'])
     ->prefix('dashboard')
     ->group( function() {
         Route::get('/', [
