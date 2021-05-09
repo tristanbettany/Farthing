@@ -67,6 +67,10 @@ Route::middleware(['auth:web', 'validate.account'])
                     TransactionsController::class,
                     'postIndex',
                 ]);
+                Route::get('/toggle-redaction-mode', [
+                    TransactionsController::class,
+                    'getToggleRedactionMode',
+                ]);
             });
 
         Route::prefix('accounts/{accountId}/transactions/{transactionId}')

@@ -20,9 +20,15 @@
                         <a href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}" title="{{ $tag->name }}" class="relative top-10px rounded-full h-10px w-10px inline-block cursor-pointer" style="background-color:#{{ $tag->hex_code }};">&nbsp;</a>
                     @endforeach
                 </td>
-                <td><abbr title="{{ $transaction->name }}">{{ $transaction->getTruncatedName() }}</abbr></td>
-                <td>{{ $transaction->amount }}</td>
-                <td>{{ $transaction->running_total }}</td>
+                <td>
+                    <abbr title="{{ $transaction->name }}">{{ $transaction->getTruncatedName() }}</abbr>
+                </td>
+                <td>
+                    <span class="{{ session('redacted') === true ? 'rounded bg-black text-black px-10px py-5px' : '' }}">{{ $transaction->amount }}</span>
+                </td>
+                <td>
+                    <span class="{{ session('redacted') === true ? 'rounded bg-black text-black px-10px py-5px' : '' }}">{{ $transaction->running_total }}</span>
+                </td>
                 <td>
                     @if($transaction->is_cashed === true)
                         <span class="rounded bg-ter-100 px-10px py-5px">Cashed</span>
