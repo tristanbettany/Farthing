@@ -45,8 +45,11 @@ EXIT /B
 :CASE_install
     ECHO Removing temporary application files...
     @RD /S /Q "vendor"
+    @RD /S /Q "node_modules"
     ECHO Installing composer dependencies...
     docker container exec -w /www php composer install
+    ECHO Installing npm dependencies...
+    docker container exec -w /www node npm install
     GOTO END_CASE
 
 :CASE_update
