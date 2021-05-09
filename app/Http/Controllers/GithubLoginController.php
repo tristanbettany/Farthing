@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use League\OAuth2\Client\Provider\Github;
 use Exception;
-use HttpException;
 
 class GithubLoginController extends Controller
 {
@@ -36,7 +35,7 @@ class GithubLoginController extends Controller
         ) {
             Session::forget('state');
 
-            throw new HttpException('Invalid OAuth State');
+            throw new Exception('Invalid OAuth State');
         }
 
         try {
@@ -46,7 +45,7 @@ class GithubLoginController extends Controller
 
             $user = $provider->getResourceOwner($token);
         } catch (Exception $e) {
-            throw new HttpException('Unable to retrieve access token');
+            throw new Exception('Unable to retrieve access token: ' . $e->getMessage());
         }
 
         $userModel = User::where('email', $user->getEmail())
