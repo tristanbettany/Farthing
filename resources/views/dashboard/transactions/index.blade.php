@@ -32,7 +32,7 @@
             </div>
 
             <div class="w-full my-10px">
-                <button class="block w-full bg-pri-500 text-white py-10px px-20px text-center hover:bg-ter-800 border-2 border-t-0 border-pri-500 outline-none" name="filter">
+                <button class="block w-full bg-pri-500 text-white py-10px px-20px text-center hover:bg-ter-800 border-2 border-pri-500 outline-none" name="filter">
                     Filter Transactions
                 </button>
             </div>
