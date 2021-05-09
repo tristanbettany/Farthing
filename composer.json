@@ -1,7 +1,7 @@
 {
-    "name": "tristanbettany/laravel-farthing",
+    "name": "tristanbettany/farthing",
     "type": "project",
-    "description": "Laravel Farthing",
+    "description": "Farthing",
     "license": "MIT",
     "require": {
         "php": "^8.0",
