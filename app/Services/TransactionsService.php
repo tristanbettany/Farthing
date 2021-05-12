@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Interfaces\TransactionsInterface;
 use App\Models\Pivots\TransactionTag;
 use App\Models\Transaction;
 use App\Parsers\AbstractTransactionParser;
@@ -12,7 +13,7 @@ use Exception;
 use DateTimeInterface;
 use Illuminate\Support\Facades\DB;
 
-final class TransactionsService extends AbstractService
+final class TransactionsService extends AbstractService implements TransactionsInterface
 {
     public function __construct(
         private TagsService $tagsService

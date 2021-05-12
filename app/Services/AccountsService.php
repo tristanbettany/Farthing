@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
+use App\Interfaces\AccountsInterface;
 use App\Models\Account;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
-final class AccountsService extends AbstractService
+final class AccountsService extends AbstractService implements AccountsInterface
 {
     public function getAccount(int $accountId): Account
     {

@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Interfaces\TemplatesInterface;
 use App\Models\Template;
 use App\Models\Transaction;
 use Cron\CronExpression;
 use Illuminate\Database\Eloquent\Builder;
 
-final class TemplatesService extends AbstractService
+final class TemplatesService extends AbstractService implements TemplatesInterface
 {
     public function __construct(
         private TransactionsService $transactionsService

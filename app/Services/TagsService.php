@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
+use App\Interfaces\TagsInterface;
 use App\Models\Pivots\TransactionTag;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Closure;
 use Illuminate\Support\Collection;
 
-final class TagsService extends AbstractService
+final class TagsService extends AbstractService implements TagsInterface
 {
     public function getTag(int $tagId): Tag
     {

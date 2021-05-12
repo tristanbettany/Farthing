@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
+use App\Interfaces\ServiceInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 
-class AbstractService
+class AbstractService implements ServiceInterface
 {
     protected int $paginationSize = 25;
 
