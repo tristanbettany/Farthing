@@ -9,12 +9,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 final class TemplatesService extends AbstractService
 {
-    private TransactionsService $transactionsService;
-
-    public function __construct(TransactionsService $transactionsService)
-    {
-        $this->transactionsService = $transactionsService;
-    }
+    public function __construct(
+        private TransactionsService $transactionsService
+    ) {}
 
     public function getTemplate($templateId): Template
     {

@@ -8,17 +8,15 @@ abstract class AbstractTransactionParser
 {
     public const PARSER_NATWEST = 'Natwest CSV';
 
-    protected UploadedFile $transactionsFile;
     protected array $rows;
 
-    public function __construct(UploadedFile $transactionsFile)
-    {
-        $this->transactionsFile = $transactionsFile;
-
+    public function __construct(
+        protected UploadedFile $transactionsFile
+    ) {
         $this->load();
     }
 
-    public function load()
+    protected function load()
     {
         $this->rows = array_map(
             'str_getcsv',

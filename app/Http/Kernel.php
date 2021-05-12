@@ -46,7 +46,6 @@ class Kernel extends HttpKernel
             VerifyCsrfToken::class,
             SubstituteBindings::class,
         ],
-
         'api' => [
             'throttle:api',
             SubstituteBindings::class,
