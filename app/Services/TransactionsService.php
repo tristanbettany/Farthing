@@ -12,6 +12,8 @@ use Illuminate\Http\UploadedFile;
 use Exception;
 use DateTimeInterface;
 use Illuminate\Support\Facades\DB;
+use DomainException;
+use DateTime;
 
 final class TransactionsService extends AbstractService implements TransactionsInterface
 {
@@ -232,5 +234,82 @@ final class TransactionsService extends AbstractService implements TransactionsI
 
             DB::statement($sql);
         }
+    }
+
+    public function getMonthlyCalculations(
+        int $accountId,
+        int $months
+    ): array {
+        $calculations = [];
+        $date = new DateTime('first day of this month midnight');
+
+        $from = $date;
+        $to = $date->modify('+1 month')
+            ->modify('-1 day');
+
+        $rangeCalculations = $this->getCalculationsForRange(
+            $accountId,
+            $from,
+            $to
+        );
+
+        $calculations[] = [
+            'from' => $from,
+            'to' => $to,
+            'calculations' => $rangeCalculations,
+        ];
+
+        for ($i = 1; $i <= $months; $i++) {
+            $from = new DateTime('first day of this month midnight');
+            $to = new DateTime('first day of this month midnight');
+
+            $from->modify('-'. $i .' month');
+            $to->modify('-'. $i .' month')
+                ->modify('+1 month')
+                ->modify('-1 day');
+
+            $rangeCalculations = $this->getCalculationsForRange(
+                $accountId,
+                $from,
+                $to
+            );
+
+            $calculations[] = [
+                'from' => $from,
+                'to' => $to,
+                'calculations' => $rangeCalculations,
+            ];
+        }
+
+        return $calculations;
+    }
+
+    public function getCalculationsForRange(
+        int $accountId,
+        DateTimeInterface $from,
+        DateTimeInterface $to
+    ): array {
+        $transactions = $this->getTransactionsQuery($accountId)
+            ->where('date', '>=', $from)
+            ->where('date', '<=', $to)
+            ->orderByDesc('date')
+            ->orderByDesc('id')
+            ->get();
+
+        if (
+            empty($transactions) === true
+            || $transactions->count() < 1
+        ) {
+            return [];
+        }
+
+        $firstTransaction = $transactions->first();
+        $lastTransaction = $transactions->last();
+
+        return [
+            'start' => $firstTransaction->running_total,
+            'end' => $lastTransaction->running_total,
+            'diff' => $lastTransaction->running_total - $firstTransaction->running_total,
+        ];
     }
 }
