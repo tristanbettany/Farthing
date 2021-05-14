@@ -33,6 +33,11 @@ Route::middleware(['auth:web', 'validate.account'])
             'getIndex',
         ]);
 
+        Route::get('/toggle-redaction-mode', [
+            DashboardController::class,
+            'getToggleRedactionMode',
+        ]);
+
         Route::prefix('accounts')
             ->group(function () {
                 Route::get('/', [
@@ -66,10 +71,6 @@ Route::middleware(['auth:web', 'validate.account'])
                 Route::post('/', [
                     TransactionsController::class,
                     'postIndex',
-                ]);
-                Route::get('/toggle-redaction-mode', [
-                    TransactionsController::class,
-                    'getToggleRedactionMode',
                 ]);
             });
 

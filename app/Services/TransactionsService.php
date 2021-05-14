@@ -300,7 +300,11 @@ final class TransactionsService extends AbstractService implements TransactionsI
             empty($transactions) === true
             || $transactions->count() < 1
         ) {
-            return [];
+            return [
+                'start' => null,
+                'end' => null,
+                'diff' => null,
+            ];
         }
 
         $firstTransaction = $transactions->first();

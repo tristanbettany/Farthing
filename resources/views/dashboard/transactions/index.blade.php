@@ -71,7 +71,7 @@
             </div>
 
             <div class="w-full mt-80px">
-                <a href="/dashboard/accounts/{{ $account->id }}/transactions/toggle-redaction-mode" class="cursor-pointer block w-full text-center text-white border-2 border-ter-500 py-10px px-20px hover:border-white outline-none">
+                <a href="/dashboard/toggle-redaction-mode" class="cursor-pointer block w-full text-center text-white border-2 border-ter-500 py-10px px-20px hover:border-white outline-none">
                     Toggle Redaction Mode
                 </a>
             </div>

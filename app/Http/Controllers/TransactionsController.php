@@ -150,15 +150,4 @@ class TransactionsController extends Controller
 
         return redirect('/dashboard/accounts/' . $accountId . '/transactions');
     }
-
-    public function getToggleRedactionMode(int $accountId): RedirectResponse
-    {
-        if (Session::get('redacted') === true) {
-            Session::put('redacted', false);
-        } else {
-            Session::put('redacted', true);
-        }
-
-        return redirect('/dashboard/accounts/' . $accountId . '/transactions');
-    }
 }

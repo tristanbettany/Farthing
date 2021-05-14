@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Services\AccountsService;
 use App\Services\TransactionsService;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
@@ -36,5 +38,16 @@ class DashboardController extends Controller
 
         return view('dashboard.index')
             ->with('accountsCalculations', $accountsCalculations);
+    }
+
+    public function getToggleRedactionMode(): RedirectResponse
+    {
+        if (Session::get('redacted') === true) {
+            Session::put('redacted', false);
+        } else {
+            Session::put('redacted', true);
+        }
+
+        return redirect()->back();
     }
 }
