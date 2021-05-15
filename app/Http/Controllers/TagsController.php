@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TagRequest;
+use App\Interfaces\AccountsServiceInterface;
+use App\Interfaces\TagsServiceInterface;
 use App\Jobs\ProcessTagsJob;
-use App\Services\AccountsService;
-use App\Services\TagsService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -14,8 +14,8 @@ use Exception;
 class TagsController extends Controller
 {
     public function __construct(
-        private AccountsService $accountsService,
-        private TagsService $tagsService
+        private AccountsServiceInterface $accountsService,
+        private TagsServiceInterface $tagsService
     ){}
 
     public function getIndex(int $accountId): Renderable

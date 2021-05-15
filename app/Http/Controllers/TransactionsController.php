@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
-use App\Services\AccountsService;
-use App\Services\TransactionsService;
+use App\Interfaces\AccountsServiceInterface;
+use App\Interfaces\TransactionsServiceInterface;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,8 +15,8 @@ use DateTimeImmutable;
 class TransactionsController extends Controller
 {
     public function __construct(
-        private AccountsService $accountsService,
-        private TransactionsService $transactionsService
+        private AccountsServiceInterface $accountsService,
+        private TransactionsServiceInterface $transactionsService
     ){}
 
     public function getIndex(
