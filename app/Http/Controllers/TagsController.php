@@ -13,31 +13,32 @@ use Exception;
 
 class TagsController extends Controller
 {
-    public function getIndex(
-        int $accountId,
-        AccountsService $accountsService,
-        TagsService $tagsService
-    ): Renderable {
-        $account = $accountsService->getAccount($accountId);
+    public function __construct(
+        private AccountsService $accountsService,
+        private TagsService $tagsService
+    ){}
 
-        $tagsQuery = $tagsService->getTagsQuery($accountId);
+    public function getIndex(int $accountId): Renderable
+    {
+        $account = $this->accountsService->getAccount($accountId);
 
-        $tagsQuery = $tagsService->orderTags($tagsQuery);
+        $tagsQuery = $this->tagsService->getTagsQuery($accountId);
+
+        $tagsQuery = $this->tagsService->orderTags($tagsQuery);
 
         return view('dashboard.tags.index')
-            ->with('tags', $tagsService->paginateRecords($tagsQuery))
+            ->with('tags', $this->tagsService->paginateRecords($tagsQuery))
             ->with('account', $account);
     }
 
     public function postIndex(
         int $accountId,
-        TagRequest $request,
-        TagsService $tagsService
+        TagRequest $request
     ): RedirectResponse {
         $validatedInput = $request->validated();
 
         try {
-            $tag = $tagsService->addTag(
+            $tag = $this->tagsService->addTag(
                 $accountId,
                 $validatedInput['name'],
                 $validatedInput['regex'],
@@ -54,12 +55,10 @@ class TagsController extends Controller
 
     public function getView(
         int $accountId,
-        int $tagId,
-        AccountsService $accountsService,
-        TagsService $tagsService
+        int $tagId
     ): Renderable {
-        $account = $accountsService->getAccount($accountId);
-        $tag = $tagsService->getTag($tagId);
+        $account = $this->accountsService->getAccount($accountId);
+        $tag = $this->tagsService->getTag($tagId);
 
         return view('dashboard.tags.view')
             ->with('account', $account)
@@ -69,14 +68,12 @@ class TagsController extends Controller
     public function postView(
         int $accountId,
         int $tagId,
-        TagRequest $request,
-        AccountsService $accountsService,
-        TagsService $tagsService
+        TagRequest $request
     ): RedirectResponse {
         $validatedInput = $request->validated();
 
         try {
-            $tag = $tagsService->updateTag(
+            $tag = $this->tagsService->updateTag(
                 $tagId,
                 $validatedInput['name'],
                 $validatedInput['regex'],
@@ -93,11 +90,10 @@ class TagsController extends Controller
 
     public function getDelete(
         int $accountId,
-        int $tagId,
-        TagsService $tagsService
+        int $tagId
     ): RedirectResponse {
         try {
-            $tagsService->deleteTag($tagId);
+            $this->tagsService->deleteTag($tagId);
         } catch (Exception $e) {
             Session::flash('error', 'Failed To Delete Tag ' . $e->getMessage());
         }

@@ -11,24 +11,26 @@ use Exception;
 
 class AccountsController extends Controller
 {
-    public function getIndex(AccountsService $accountsService): Renderable
-    {
-        $accountsQuery = $accountsService->getAccountsQuery();
+    public function __construct(
+        private AccountsService $accountsService
+    ){}
 
-        $accountsQuery = $accountsService->orderAccounts($accountsQuery);
+    public function getIndex(): Renderable
+    {
+        $accountsQuery = $this->accountsService->getAccountsQuery();
+
+        $accountsQuery = $this->accountsService->orderAccounts($accountsQuery);
 
         return view('dashboard.accounts.index')
-            ->with('accounts', $accountsService->paginateRecords($accountsQuery));
+            ->with('accounts', $this->accountsService->paginateRecords($accountsQuery));
     }
 
-    public function postIndex(
-        AccountRequest $request,
-        AccountsService $accountsService
-    ): RedirectResponse {
+    public function postIndex(AccountRequest $request): RedirectResponse
+    {
         $validatedInput = $request->validated();
 
         try {
-            $account = $accountsService->addAccount(
+            $account = $this->accountsService->addAccount(
                 $validatedInput['name'],
                 $validatedInput['sort_code'],
                 $validatedInput['account_number']
@@ -42,11 +44,9 @@ class AccountsController extends Controller
         return redirect('/dashboard/accounts');
     }
 
-    public function getView(
-        int $accountId,
-        AccountsService $accountsService
-    ): Renderable {
-        $account = $accountsService->getAccount($accountId);
+    public function getView(int $accountId): Renderable
+    {
+        $account = $this->accountsService->getAccount($accountId);
 
         return view('dashboard.accounts.view')
             ->with('account', $account);
@@ -54,13 +54,12 @@ class AccountsController extends Controller
 
     public function postView(
         int $accountId,
-        AccountRequest $request,
-        AccountsService $accountsService
+        AccountRequest $request
     ): RedirectResponse {
         $validatedInput = $request->validated();
 
         try {
-            $account = $accountsService->updateAccount(
+            $account = $this->accountsService->updateAccount(
                 $accountId,
                 $validatedInput['name'],
                 $validatedInput['sort_code'],

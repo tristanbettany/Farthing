@@ -12,31 +12,32 @@ use Exception;
 
 class TemplatesController extends Controller
 {
-    public function getIndex(
-        int $accountId,
-        AccountsService $accountsService,
-        TemplatesService $templatesService
-    ): Renderable {
-        $account = $accountsService->getAccount($accountId);
+    public function __construct(
+        private AccountsService $accountsService,
+        private TemplatesService $templatesService
+    ){}
 
-        $templatesQuery = $templatesService->getTemplatesQuery($accountId);
+    public function getIndex(int $accountId): Renderable
+    {
+        $account = $this->accountsService->getAccount($accountId);
 
-        $templatesQuery = $templatesService->orderTemplates($templatesQuery);
+        $templatesQuery = $this->templatesService->getTemplatesQuery($accountId);
+
+        $templatesQuery = $this->templatesService->orderTemplates($templatesQuery);
 
         return view('dashboard.templates.index')
-            ->with('templates', $templatesService->paginateRecords($templatesQuery))
+            ->with('templates', $this->templatesService->paginateRecords($templatesQuery))
             ->with('account', $account);
     }
 
     public function postIndex(
         int $accountId,
-        TemplateRequest $request,
-        TemplatesService $templatesService
+        TemplateRequest $request
     ): RedirectResponse {
         $validatedInput = $request->validated();
 
         try {
-            $templatesService->addTemplate(
+            $this->templatesService->addTemplate(
                 $accountId,
                 (float) $validatedInput['amount'],
                 (int) $validatedInput['occurances'],
@@ -54,11 +55,10 @@ class TemplatesController extends Controller
 
     public function getDeactivate(
         int $accountId,
-        int $templateId,
-        TemplatesService $templatesService
+        int $templateId
     ): RedirectResponse {
         try {
-            $templatesService->deactivateTemplate(
+            $this->templatesService->deactivateTemplate(
                 $accountId,
                 $templateId
             );
@@ -71,16 +71,14 @@ class TemplatesController extends Controller
         return redirect('/dashboard/accounts/' . $accountId . '/templates');
     }
 
-    public function getDeactivateAll(
-        int $accountId,
-        TemplatesService $templatesService
-    ): RedirectResponse {
+    public function getDeactivateAll(int $accountId): RedirectResponse
+    {
         try {
-            $templates = $templatesService->getTemplatesQuery($accountId)
+            $templates = $this->templatesService->getTemplatesQuery($accountId)
                 ->get();
 
             foreach ($templates as $template) {
-                $templatesService->deactivateTemplate(
+                $this->templatesService->deactivateTemplate(
                     $accountId,
                     $template->id
                 );
@@ -96,11 +94,10 @@ class TemplatesController extends Controller
 
     public function getActivate(
         int $accountId,
-        int $templateId,
-        TemplatesService $templatesService
+        int $templateId
     ): RedirectResponse {
         try {
-            $templatesService->activateTemplate(
+            $this->templatesService->activateTemplate(
                 $accountId,
                 $templateId
             );
@@ -113,16 +110,14 @@ class TemplatesController extends Controller
         return redirect('/dashboard/accounts/' . $accountId . '/templates');
     }
 
-    public function getActivateAll(
-        int $accountId,
-        TemplatesService $templatesService
-    ): RedirectResponse {
+    public function getActivateAll(int $accountId): RedirectResponse
+    {
         try {
-            $templates = $templatesService->getTemplatesQuery($accountId)
+            $templates = $this->templatesService->getTemplatesQuery($accountId)
                 ->get();
 
             foreach ($templates as $template) {
-                $templatesService->activateTemplate(
+                $this->templatesService->activateTemplate(
                     $accountId,
                     $template->id
                 );
@@ -138,11 +133,10 @@ class TemplatesController extends Controller
 
     public function getDelete(
         int $accountId,
-        int $templateId,
-        TemplatesService $templatesService
+        int $templateId
     ): RedirectResponse {
         try {
-            $templatesService->deleteTemplate(
+            $this->templatesService->deleteTemplate(
                 $accountId,
                 $templateId
             );
@@ -157,12 +151,10 @@ class TemplatesController extends Controller
 
     public function getView(
         int $accountId,
-        int $templateId,
-        AccountsService $accountsService,
-        TemplatesService $templatesService
+        int $templateId
     ): Renderable {
-        $account = $accountsService->getAccount($accountId);
-        $template = $templatesService->getTemplate($templateId);
+        $account = $this->accountsService->getAccount($accountId);
+        $template = $this->templatesService->getTemplate($templateId);
 
         return view('dashboard.templates.view')
             ->with('account', $account)
@@ -172,13 +164,12 @@ class TemplatesController extends Controller
     public function postView(
         int $accountId,
         int $templateId,
-        TemplateRequest $request,
-        TemplatesService $templatesService
+        TemplateRequest $request
     ): RedirectResponse {
         $validatedInput = $request->validated();
 
         try {
-            $template = $templatesService->updateTemplate(
+            $template = $this->templatesService->updateTemplate(
                 $accountId,
                 $templateId,
                 $validatedInput['name'],

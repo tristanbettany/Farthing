@@ -14,19 +14,22 @@ use DateTimeImmutable;
 
 class TransactionsController extends Controller
 {
+    public function __construct(
+        private AccountsService $accountsService,
+        private TransactionsService $transactionsService
+    ){}
+
     public function getIndex(
         int $accountId,
-        Request $request,
-        AccountsService $accountsService,
-        TransactionsService $transactionsService
+        Request $request
     ): Renderable {
-        $account = $accountsService->getAccount($accountId);
+        $account = $this->accountsService->getAccount($accountId);
 
-        $transactionsQuery = $transactionsService->getTransactionsQuery($accountId);
+        $transactionsQuery = $this->transactionsService->getTransactionsQuery($accountId);
 
         if ($request->has('filter') === true) {
             try {
-                $transactionsQuery = $transactionsService->filterTransactionsByDate(
+                $transactionsQuery = $this->transactionsService->filterTransactionsByDate(
                     $transactionsQuery,
                     new DateTimeImmutable($request->get('date-from')),
                     new DateTimeImmutable($request->get('date-to'))
@@ -38,28 +41,27 @@ class TransactionsController extends Controller
             Session::flash('success', 'Showing Filtered Transactions');
         }
 
-        $transactionsQuery = $transactionsService->orderTransactions($transactionsQuery);
+        $transactionsQuery = $this->transactionsService->orderTransactions($transactionsQuery);
 
         if (
             $request->has('page') === false
             && $request->has('filter') === false
         ) {
-            $page = $transactionsService->determineStartPage($accountId);
+            $page = $this->transactionsService->determineStartPage($accountId);
         }
 
         return view('dashboard.transactions.index')
-            ->with('transactions', $transactionsService->paginateRecords($transactionsQuery, $page ?? null))
+            ->with('transactions', $this->transactionsService->paginateRecords($transactionsQuery, $page ?? null))
             ->with('account', $account);
     }
 
     public function postIndex(
         int $accountId,
-        Request $request,
-        TransactionsService $transactionsService
+        Request $request
     ): RedirectResponse {
         if ($request->has('add') === true) {
             try {
-                $transactionsService->addTransaction(
+                $this->transactionsService->addTransaction(
                     $accountId,
                     new DateTimeImmutable($request->get('date')),
                     (float) $request->get('amount'),
@@ -67,7 +69,7 @@ class TransactionsController extends Controller
                     $request->get('name'),
                 );
 
-                $transactionsService->recalculateRunningTotals($accountId);
+                $this->transactionsService->recalculateRunningTotals($accountId);
             } catch (Exception $e) {
                 Session::flash('error', 'Failed To Add Transaction ' . $e->getMessage());
             }
@@ -77,13 +79,13 @@ class TransactionsController extends Controller
 
         if ($request->has('upload') === true) {
             try {
-                $transactionsService->uploadTransactions(
+                $this->transactionsService->uploadTransactions(
                     $accountId,
                     $request->get('bank'),
                     $request->file('csv')
                 );
 
-                $transactionsService->recalculateRunningTotals($accountId);
+                $this->transactionsService->recalculateRunningTotals($accountId);
             } catch (Exception $e) {
                 Session::flash('error', 'Failed To Upload Transactions ' . $e->getMessage());
             }
@@ -96,12 +98,10 @@ class TransactionsController extends Controller
 
     public function getView(
         int $accountId,
-        int $transactionId,
-        AccountsService $accountsService,
-        TransactionsService $transactionsService
+        int $transactionId
     ): Renderable {
-        $account = $accountsService->getAccount($accountId);
-        $transaction = $transactionsService->getTransaction($transactionId);
+        $account = $this->accountsService->getAccount($accountId);
+        $transaction = $this->transactionsService->getTransaction($transactionId);
 
         return view('dashboard.transactions.view')
             ->with('account', $account)
@@ -111,20 +111,19 @@ class TransactionsController extends Controller
     public function postView(
         int $accountId,
         int $transactionId,
-        TransactionRequest $request,
-        TransactionsService $transactionsService
+        TransactionRequest $request
     ): RedirectResponse {
         $validatedInput = $request->validated();
 
         try {
-            $transaction = $transactionsService->updateTransaction(
+            $transaction = $this->transactionsService->updateTransaction(
                 $transactionId,
                 $validatedInput['name'],
                 (float) $validatedInput['amount'],
                 new DateTimeImmutable($validatedInput['date'])
             );
 
-            $transactionsService->recalculateRunningTotals($accountId);
+            $this->transactionsService->recalculateRunningTotals($accountId);
         } catch (Exception $e) {
             Session::flash('error', 'Failed To Update Transaction ' . $e->getMessage());
         }
@@ -136,12 +135,11 @@ class TransactionsController extends Controller
 
     public function getDelete(
         int $accountId,
-        int $transactionId,
-        TransactionsService $transactionsService
+        int $transactionId
     ): RedirectResponse {
         try {
-            $transactionsService->deleteTransaction($transactionId);
-            $transactionsService->recalculateRunningTotals($accountId);
+            $this->transactionsService->deleteTransaction($transactionId);
+            $this->transactionsService->recalculateRunningTotals($accountId);
         } catch (Exception $e) {
             Session::flash('error', 'Failed To Delete Transaction ' . $e->getMessage());
         }
