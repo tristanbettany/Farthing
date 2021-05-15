@@ -35,6 +35,5 @@ To setup the application on your server do the following things:
 
 ## Usage
 
-- Make sure to import the `ssl.cer` file in this directory to your browser which will allow `farthing.test` SSL to work
 - Make sure to add `farthing.test` to your hosts file pointing to your local machine
 - Now you should be able to visit and login with your github account at `https://farthing.test`
