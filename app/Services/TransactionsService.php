@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Interfaces\TagsServiceInterface;
 use App\Interfaces\TransactionsServiceInterface;
 use App\Models\Pivots\TransactionTag;
 use App\Models\Transaction;
@@ -12,13 +13,12 @@ use Illuminate\Http\UploadedFile;
 use Exception;
 use DateTimeInterface;
 use Illuminate\Support\Facades\DB;
-use DomainException;
 use DateTime;
 
 final class TransactionsService extends AbstractService implements TransactionsServiceInterface
 {
     public function __construct(
-        private TagsService $tagsService
+        private TagsServiceInterface $tagsService
     ) {}
 
     public function getTransaction(int $transactionId): Transaction
