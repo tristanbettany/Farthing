@@ -2,26 +2,26 @@
 
 namespace App\Providers;
 
-use App\Interfaces\AccountsInterface;
+use App\Interfaces\AccountsServiceInterface;
 use App\Interfaces\ServiceInterface;
-use App\Interfaces\TagsInterface;
-use App\Interfaces\TemplatesInterface;
-use App\Interfaces\TransactionsInterface;
+use App\Interfaces\TagsServiceInterface;
+use App\Interfaces\TemplatesServiceInterface;
+use App\Interfaces\TransactionsServiceInterface;
 use App\Services\AbstractService;
-use App\Services\AccountsService;
-use App\Services\TagsService;
-use App\Services\TemplatesService;
-use App\Services\TransactionsService;
+use App\Services\AccountsServiceService;
+use App\Services\TagsServiceService;
+use App\Services\TemplatesServiceService;
+use App\Services\TransactionsServiceService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     private const BINDINGS = [
         ServiceInterface::class => AbstractService::class,
-        AccountsInterface::class => AccountsService::class,
-        TagsInterface::class => TagsService::class,
-        TemplatesInterface::class => TemplatesService::class,
-        TransactionsInterface::class => TransactionsService::class,
+        AccountsServiceInterface::class => AccountsServiceService::class,
+        TagsServiceInterface::class => TagsServiceService::class,
+        TemplatesServiceInterface::class => TemplatesServiceService::class,
+        TransactionsServiceInterface::class => TransactionsServiceService::class,
     ];
 
     public function register(): void

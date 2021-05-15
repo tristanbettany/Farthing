@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
-interface TagsInterface
+interface TagsServiceInterface
 {
     public function getTag(int $tagId): Tag;
 

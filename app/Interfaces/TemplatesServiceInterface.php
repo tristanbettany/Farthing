@@ -5,7 +5,7 @@ namespace App\Interfaces;
 use App\Models\Template;
 use Illuminate\Database\Eloquent\Builder;
 
-interface TemplatesInterface
+interface TemplatesServiceInterface
 {
     public function getTemplate($templateId): Template;
 

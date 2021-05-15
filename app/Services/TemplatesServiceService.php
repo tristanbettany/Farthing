@@ -2,16 +2,16 @@
 
 namespace App\Services;
 
-use App\Interfaces\TemplatesInterface;
+use App\Interfaces\TemplatesServiceInterface;
 use App\Models\Template;
 use App\Models\Transaction;
 use Cron\CronExpression;
 use Illuminate\Database\Eloquent\Builder;
 
-final class TemplatesService extends AbstractService implements TemplatesInterface
+final class TemplatesServiceService extends AbstractService implements TemplatesServiceInterface
 {
     public function __construct(
-        private TransactionsService $transactionsService
+        private TransactionsServiceService $transactionsService
     ) {}
 
     public function getTemplate($templateId): Template

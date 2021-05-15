@@ -5,7 +5,7 @@ namespace App\Interfaces;
 use App\Models\Account;
 use Illuminate\Database\Eloquent\Builder;
 
-interface AccountsInterface
+interface AccountsServiceInterface
 {
     public function getAccount(int $accountId): Account;
 

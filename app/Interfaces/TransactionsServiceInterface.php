@@ -7,7 +7,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
 
-interface TransactionsInterface
+interface TransactionsServiceInterface
 {
     public function getTransaction(int $transactionId): Transaction;
 

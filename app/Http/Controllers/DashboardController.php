@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\AccountsService;
-use App\Services\TransactionsService;
+use App\Services\AccountsServiceService;
+use App\Services\TransactionsServiceService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Session;
 class DashboardController extends Controller
 {
     public function __construct(
-        private TransactionsService $transactionsService,
-        private AccountsService $accountsService
+        private TransactionsServiceService $transactionsService,
+        private AccountsServiceService $accountsService
     ){}
 
     public function getIndex(): Renderable
