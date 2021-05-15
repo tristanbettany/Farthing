@@ -106,6 +106,11 @@ EXIT /B
     docker container exec -w /www php php artisan db:seed
     GOTO END_CASE
 
+:CASE_reset-db
+    ECHO Reseting database...
+    docker container exec -w /www php php artisan migrate:fresh
+    GOTO END_CASE
+
 :DEFAULT_CASE
     ECHO Unknown function %1
     GOTO END_CASE
