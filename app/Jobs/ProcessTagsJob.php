@@ -3,8 +3,8 @@
 namespace App\Jobs;
 
 use App\Models\Pivots\TransactionTag;
-use App\Services\AccountsServiceService;
-use App\Services\TagsServiceService;
+use App\Services\AccountsService;
+use App\Services\TagsService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -24,10 +24,10 @@ class ProcessTagsJob implements ShouldQueue
 
     public function handle(): void
     {
-        /** @var AccountsServiceService $accountsService */
-        $accountsService = app()->get(AccountsServiceService::class);
-        /** @var TagsServiceService $tagsService */
-        $tagsService = app()->get(TagsServiceService::class);
+        /** @var AccountsService $accountsService */
+        $accountsService = app()->get(AccountsService::class);
+        /** @var TagsService $tagsService */
+        $tagsService = app()->get(TagsService::class);
 
         $account = $accountsService->getAccount($this->accountId);
         $tagsService->dropTags($account->id);

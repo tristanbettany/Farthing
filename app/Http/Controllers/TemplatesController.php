@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TemplateRequest;
-use App\Services\AccountsServiceService;
-use App\Services\TemplatesServiceService;
+use App\Services\AccountsService;
+use App\Services\TemplatesService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -13,8 +13,8 @@ use Exception;
 class TemplatesController extends Controller
 {
     public function __construct(
-        private AccountsServiceService $accountsService,
-        private TemplatesServiceService $templatesService
+        private AccountsService $accountsService,
+        private TemplatesService $templatesService
     ){}
 
     public function getIndex(int $accountId): Renderable

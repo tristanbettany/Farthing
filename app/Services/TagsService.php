@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Closure;
 use Illuminate\Support\Collection;
 
-final class TagsServiceService extends AbstractService implements TagsServiceInterface
+final class TagsService extends AbstractService implements TagsServiceInterface
 {
     public function getTag(int $tagId): Tag
     {

@@ -8,10 +8,10 @@ use App\Models\Transaction;
 use Cron\CronExpression;
 use Illuminate\Database\Eloquent\Builder;
 
-final class TemplatesServiceService extends AbstractService implements TemplatesServiceInterface
+final class TemplatesService extends AbstractService implements TemplatesServiceInterface
 {
     public function __construct(
-        private TransactionsServiceService $transactionsService
+        private TransactionsService $transactionsService
     ) {}
 
     public function getTemplate($templateId): Template

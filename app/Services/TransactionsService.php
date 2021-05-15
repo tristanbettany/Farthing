@@ -15,10 +15,10 @@ use Illuminate\Support\Facades\DB;
 use DomainException;
 use DateTime;
 
-final class TransactionsServiceService extends AbstractService implements TransactionsServiceInterface
+final class TransactionsService extends AbstractService implements TransactionsServiceInterface
 {
     public function __construct(
-        private TagsServiceService $tagsService
+        private TagsService $tagsService
     ) {}
 
     public function getTransaction(int $transactionId): Transaction

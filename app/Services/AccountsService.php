@@ -7,7 +7,7 @@ use App\Models\Account;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
-final class AccountsServiceService extends AbstractService implements AccountsServiceInterface
+final class AccountsService extends AbstractService implements AccountsServiceInterface
 {
     public function getAccount(int $accountId): Account
     {

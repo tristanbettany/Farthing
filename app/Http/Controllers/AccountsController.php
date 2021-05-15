@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AccountRequest;
-use App\Services\AccountsServiceService;
+use App\Services\AccountsService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -12,7 +12,7 @@ use Exception;
 class AccountsController extends Controller
 {
     public function __construct(
-        private AccountsServiceService $accountsService
+        private AccountsService $accountsService
     ){}
 
     public function getIndex(): Renderable
