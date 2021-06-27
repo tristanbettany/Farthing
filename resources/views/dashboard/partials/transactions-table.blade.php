@@ -17,7 +17,7 @@
                 <td>{{ $transaction->date->format('d-m-Y') }}</td>
                 <td>
                     @foreach($transaction->tags as $tag)
-                        <a href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}" title="{{ $tag->name }}" class="relative top-10px rounded-full h-10px w-10px inline-block cursor-pointer" style="background-color:#{{ $tag->hex_code }};">&nbsp;</a>
+                        <a href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}" title="{{ $tag->name }}" class="rounded px-10px py-5px relative inline-block cursor-pointer {{ $tag->is_light_text === true ? 'text-white' : '' }}" style="background-color:#{{ $tag->hex_code }};">{{ $tag->name }}</a>
                     @endforeach
                 </td>
                 <td>

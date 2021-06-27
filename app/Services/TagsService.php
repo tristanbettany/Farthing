@@ -32,13 +32,15 @@ final class TagsService extends AbstractService implements TagsServiceInterface
         int $accountId,
         string $name,
         string $regex,
-        string $hexCode
+        string $hexCode,
+        bool $isLightText
     ): Tag {
         return Tag::create([
             'account_id' => $accountId,
             'name' => $name,
             'regex' => $regex,
             'hex_code' => $hexCode,
+            'is_light_text' => $isLightText,
         ]);
     }
 
@@ -46,13 +48,15 @@ final class TagsService extends AbstractService implements TagsServiceInterface
         int $tagId,
         string $name,
         string $regex,
-        string $hexCode
+        string $hexCode,
+        bool $isLightText
     ): Tag {
         $tag = $this->getTag($tagId);
 
         $tag->name = $name;
         $tag->regex = $regex;
         $tag->hex_code = $hexCode;
+        $tag->is_light_text = $isLightText;
 
         $tag->save();
 

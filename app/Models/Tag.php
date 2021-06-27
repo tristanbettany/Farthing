@@ -19,9 +19,11 @@ class Tag extends Model
         'name',
         'regex',
         'hex_code',
+        'is_light_text',
     ];
 
     protected $casts = [
+        'is_light_text' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

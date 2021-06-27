@@ -19,14 +19,16 @@ interface TagsServiceInterface
         int $accountId,
         string $name,
         string $regex,
-        string $hexCode
+        string $hexCode,
+        bool $isLightText
     ): Tag;
 
     public function updateTag(
         int $tagId,
         string $name,
         string $regex,
-        string $hexCode
+        string $hexCode,
+        bool $isLightText
     ): Tag;
 
     public function deleteTag(int $tagId): void;

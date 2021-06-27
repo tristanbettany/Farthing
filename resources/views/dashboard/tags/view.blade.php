@@ -23,6 +23,19 @@
                 <input type="text" name="hex_code" class="form-input" value="{{ $tag->hex_code }}" />
             </div>
 
+            <div class="w-full sm:w-1/4 sm:px-10px">
+                <span class="text-18px font-bold pb-10px block">Light Text?</span>
+                <div class="form-select-container">
+                    <select class="form-select" name="is_light_text">
+                        <option {{ $tag->is_light_text === false ? 'selected' : '' }}>No</option>
+                        <option {{ $tag->is_light_text === true ? 'selected' : '' }}>Yes</option>
+                    </select>
+                    <div class="form-select-icon">
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="flex flex-row justify-start items-start flex-wrap pt-40px">

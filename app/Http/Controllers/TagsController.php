@@ -42,7 +42,8 @@ class TagsController extends Controller
                 $accountId,
                 $validatedInput['name'],
                 $validatedInput['regex'],
-                $validatedInput['hex_code']
+                $validatedInput['hex_code'],
+                $validatedInput['is_light_text'] === 'Yes' ? 'true' : 'false'
             );
         } catch (Exception $e) {
             Session::flash('error', 'Failed To Add Tag ' . $e->getMessage());
@@ -77,7 +78,8 @@ class TagsController extends Controller
                 $tagId,
                 $validatedInput['name'],
                 $validatedInput['regex'],
-                $validatedInput['hex_code']
+                $validatedInput['hex_code'],
+                $validatedInput['is_light_text'] === 'Yes' ? 'true' : 'false'
             );
         } catch (Exception $e) {
             Session::flash('error', 'Failed To Update Tag ' . $e->getMessage());

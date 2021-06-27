@@ -4,6 +4,7 @@
             <th>Name</th>
             <th>Regex</th>
             <th>Hex Code</th>
+            <th>Light Text?</th>
             <th></th>
         </tr>
     </thead>
@@ -18,6 +19,7 @@
                 <td>
                     <span class="rounded px-15px" style="background-color:#{{ $tag->hex_code }};"></span>&nbsp;&nbsp;{{ $tag->hex_code }}
                 </td>
+                <td>{{ $tag->is_light_text === true ? 'Yes' : 'No' }}</td>
                 <td>
                     <a class="link pri" href="/dashboard/accounts/{{ $account->id }}/tags/{{ $tag->id }}/delete">Delete</a>
                 </td>

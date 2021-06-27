@@ -23,22 +23,35 @@
 
             <div class="flex flex-row justify-start items-end flex-wrap">
 
-                <div class="w-full sm:w-1/4 sm:px-10px">
+                <div class="w-full sm:w-1/5 sm:px-10px">
                     <span class="text-18px font-bold pb-10px sm:pb-20px block">Tag Name</span>
                     <input type="text" name="name" class="form-input" />
                 </div>
 
-                <div class="w-full sm:w-1/4 sm:px-10px">
+                <div class="w-full sm:w-1/5 sm:px-10px">
                     <span class="text-18px font-bold pb-10px sm:pb-20px block">Regex</span>
                     <input type="text" name="regex" class="form-input" />
                 </div>
 
-                <div class="w-full sm:w-1/4 sm:px-10px">
+                <div class="w-full sm:w-1/5 sm:px-10px">
                     <span class="text-18px font-bold pb-10px sm:pb-20px block">Hex Code</span>
                     <input type="text" name="hex_code" class="form-input" />
                 </div>
 
-                <div class="w-full sm:w-1/4 sm:px-10px">
+                <div class="w-full sm:w-1/5 sm:px-10px">
+                    <span class="text-18px font-bold pb-10px block">Light Text?</span>
+                    <div class="form-select-container">
+                        <select class="form-select" name="is_light_text">
+                            <option selected>No</option>
+                            <option>Yes</option>
+                        </select>
+                        <div class="form-select-icon">
+                            <i class="fas fa-caret-down"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full sm:w-1/5 sm:px-10px">
                     <button class="form-submit block w-full" name="submit">
                         Add Tag
                     </button>

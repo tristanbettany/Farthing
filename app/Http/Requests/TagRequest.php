@@ -17,6 +17,7 @@ final class TagRequest extends FormRequest
             'name' => 'required',
             'regex' => 'required',
             'hex_code' => 'required',
+            'is_light_text' => 'required',
         ];
     }
 }
