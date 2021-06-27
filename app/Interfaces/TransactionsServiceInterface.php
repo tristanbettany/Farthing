@@ -19,6 +19,11 @@ interface TransactionsServiceInterface
         DateTimeInterface $to
     ): Builder;
 
+    public function filterTransactionsByName(
+        Builder $transactionsQuery,
+        string $name
+    ): Builder;
+
     public function orderTransactions(Builder $transactionsQuery): Builder;
 
     public function getExistingTemplateTransaction(

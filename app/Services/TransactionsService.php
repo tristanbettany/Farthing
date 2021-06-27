@@ -43,6 +43,14 @@ final class TransactionsService extends AbstractService implements TransactionsS
             ->where('date', '<=', $to);
     }
 
+    public function filterTransactionsByName(
+        Builder $transactionsQuery,
+        string $name
+    ): Builder {
+        return $transactionsQuery
+            ->where('name', 'LIKE', '%'. $name .'%');
+    }
+
     public function orderTransactions(Builder $transactionsQuery): Builder
     {
         return $transactionsQuery->orderByDesc('date')

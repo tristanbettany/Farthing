@@ -27,7 +27,14 @@ class TransactionsController extends Controller
 
         $transactionsQuery = $this->transactionsService->getTransactionsQuery($accountId);
 
-        if ($request->has('filter') === true) {
+        if (
+            $request->has('filter') === true
+            &&
+            (
+                empty($request->get('date-from')) === false
+                || empty($request->get('date-to')) === false
+            )
+        ) {
             try {
                 $transactionsQuery = $this->transactionsService->filterTransactionsByDate(
                     $transactionsQuery,
@@ -37,8 +44,20 @@ class TransactionsController extends Controller
             } catch (Exception $e) {
                 Session::flash('error', 'Failed To Filter Transactions ' . $e->getMessage());
             }
+        }
 
-            Session::flash('success', 'Showing Filtered Transactions');
+        if (
+            $request->has('filter') === true
+            && $request->has('name') === true
+        ) {
+            try {
+                $transactionsQuery = $this->transactionsService->filterTransactionsByName(
+                    $transactionsQuery,
+                    $request->get('name')
+                );
+            } catch (Exception $e) {
+                Session::flash('error', 'Failed To Filter Transactions ' . $e->getMessage());
+            }
         }
 
         $transactionsQuery = $this->transactionsService->orderTransactions($transactionsQuery);

@@ -32,6 +32,15 @@
             </div>
 
             <div class="w-full my-10px">
+                <span class="text-18px font-bold pb-10px block text-white">Name</span>
+                <input type="text" name="name" class="form-input inverted"
+                   @if(request()->get('name') !== null)
+                       value="{{ request()->get('name') }}"
+                   @endif
+                />
+            </div>
+
+            <div class="w-full my-10px">
                 <button class="block w-full bg-pri-500 text-white py-10px px-20px text-center hover:bg-ter-800 border-2 border-pri-500 outline-none" name="filter">
                     Filter Transactions
                 </button>
