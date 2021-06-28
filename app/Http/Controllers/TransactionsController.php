@@ -48,7 +48,7 @@ class TransactionsController extends Controller
 
         if (
             $request->has('filter') === true
-            && $request->has('name') === true
+            &&  empty($request->get('name')) === false
         ) {
             try {
                 $transactionsQuery = $this->transactionsService->filterTransactionsByName(
