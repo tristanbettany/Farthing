@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class AbstractService implements ServiceInterface
 {
-    protected int $paginationSize = 25;
+    protected int $paginationSize = 200;
 
     public function paginateRecords(
         Builder $query,
