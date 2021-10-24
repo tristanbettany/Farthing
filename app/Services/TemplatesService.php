@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Interfaces\TemplatesServiceInterface;
 use App\Interfaces\TransactionsServiceInterface;
+use App\Models\Pivots\TransactionTag;
 use App\Models\Template;
 use App\Models\Transaction;
 use Cron\CronExpression;
@@ -120,9 +121,15 @@ final class TemplatesService extends AbstractService implements TemplatesService
 
     public function removeTemplateTransactions($templateId): void
     {
-        Transaction::query()
+        $transaction = Transaction::query()
             ->where('template_id', $templateId)
+            ->first();
+
+        TransactionTag::query()
+            ->where('transaction_id', $transaction->id)
             ->delete();
+
+        $transaction->delete();
     }
 
     public function deactivateTemplate(
