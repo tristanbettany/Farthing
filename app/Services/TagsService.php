@@ -93,7 +93,8 @@ final class TagsService extends AbstractService implements TagsServiceInterface
         $tags = $this->getTagsQuery($accountId)->get();
 
         foreach ($tags as $tag) {
-            TransactionTag::query('tag_id', $tag->id)
+            TransactionTag::query()
+                ->where('tag_id', $tag->id)
                 ->delete();
         }
     }

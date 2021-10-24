@@ -29,9 +29,9 @@ class ProcessTagsJob implements ShouldQueue
         /** @var TagsService $tagsService */
         $tagsService = app()->get(TagsService::class);
 
-        $account = $accountsService->getAccount($this->accountId);
-        $tagsService->dropTags($account->id);
+        $tagsService->dropTags($this->accountId);
 
+        $account = $accountsService->getAccount($this->accountId);
         foreach ($account->transactions as $transaction) {
             $tagsService->matchTags(
                 $tagsService->getTagsQuery($this->accountId)->get(),
